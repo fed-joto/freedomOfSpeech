@@ -4,7 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "node-sass assets/sass --output-style compressed -o assets/dist/",
+    "autoprefixer": "postcss -u autoprefixer -r assets/dist/*.css",
+    "build:css": "npm run sass && npm run autoprefixer",
+    "watch:css": "onchange \"assets/sass/**.*\" -- npm run build:css",
+    "serve": "browser-sync start --server --files \"*.*, assets/dist/*\"",
+    "start": "npm-run-all --parallel serve watch:*"
   },
   "repository": {
     "type": "git",
@@ -22,6 +28,7 @@
     "babel-preset-es2015": "^6.24.1",
     "browser-sync": "^2.18.8",
     "node-sass": "^4.5.2",
+    "npm-run-all": "^4.0.2",
     "onchange": "^3.2.1",
     "postcss-cli": "^3.2.0"
   }
