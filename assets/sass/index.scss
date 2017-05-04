@@ -128,3 +128,11 @@ body {
 	list-style: none;
 	width: 50%;
 }
+
+.active {
+	transform: translateX(0%);
+}
+
+.active-country {
+	fill: red !important;
+}
