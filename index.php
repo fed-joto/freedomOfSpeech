@@ -35,7 +35,7 @@
 		</aside>
 		<div class="wrapper">
 			<header class="header">
-				<h1 class="header__logo">Logo</h1>
+				<h1 class="header__logo">LOGO</h1>
 				<nav class="navigation">
 					<ul class="navigation__list">
 						<li class="navigation__list-item navigation__list-item--about">About</li>
@@ -46,16 +46,20 @@
 				</nav>
 			</header>
 			<article class="country-info">
-				<span class="country-info__ranking-number">3</span>
-				<h2 class="country-info__title">Titel på artikel</h2>
-				<p class="country-info__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita in soluta maxime iusto distinctio, quae, quis asperiores dicta facilis, provident quidem eveniet autem corporis amet neque ex, consequatur debitis? Adipisci!</p>
-				<button class="cta">Call to action</button>
+				<span class="country-info__ranking-number"></span>
+				<h2 class="country-info__title"></h2>
+				<p class="country-info__score"></p>
+				<p class="country-info__progression"></p>
+				<p class="country-info__rank2015"></p>
+				<p class="country-info__score2015"></p>
+				<!-- <button class="cta">Call to action</button> -->
 			</article>
 
 			<main class="map">
-				<object type="image/svg+xml" data="img/world-map-1.svg" id="mySvg">
+				<!-- <object type="image/svg+xml" data="img/world-map-1.svg" id="mySvg">
 					Your browser does not support SVG
-				</object>
+				</object> -->
+				<?php include 'img/world-map-1.svg' ?>
 			</main>
 
 			<section class="twitter">
