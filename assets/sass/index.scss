@@ -50,9 +50,9 @@ body {
 	padding: 1em;
 	position: absolute;
 	top: 0;
-	transform: translateY(-110%);
+	// transform: translateY(-110%);
 	transition: 400ms all ease-in;
-	z-index: 10;
+	z-index: -10;
 }
 
 .take-action {
@@ -65,9 +65,9 @@ body {
 	position: absolute;
 	text-align: center;
 	top: 0;
-	transform: translateY(-110%);
+	// transform: translateY(-110%);
 	transition: 400ms all ease-in;
-	z-index: 10;
+	z-index: -10;
 
 	&__action {
 		padding: 0 2em;
@@ -83,9 +83,8 @@ body {
 	top: 0;
 	right: 0;
 	transition: 400ms all ease-in;
-	transform: translateX(110%);
 	width: 35%;
-	z-index: 10;
+	z-index: -10;
 
 	&__tweets {
 		list-style: none;
@@ -133,6 +132,68 @@ body {
 	transform: translateX(0%);
 }
 
+g path {
+	transition: 400ms all;
+}
+
 .active-country {
 	fill: red !important;
+}
+
+.wrapper {
+	background: #fff;
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	transition: 400ms all;
+}
+
+.search-box {
+	background: grey;
+	padding: 5em;
+	z-index: -10;
+
+	input {
+		width: 100%;
+		font-size: 3em;
+		padding: .2em;
+		opacity: 0;
+		transform: scale(.5);
+		transition: 600ms all;
+	}
+}
+
+.search-visible {
+	.wrapper {
+		top: 30vh;
+	}
+
+	.search-box {
+		z-index: -0;
+		input {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+}
+
+.action-visible {
+	.wrapper {
+		top: 30vh;
+	}
+
+	.take-action {
+		z-index: -0;
+	}
+}
+
+.about-visible {
+	.wrapper {
+		top: 30vh;
+	}
+
+	.about {
+		z-index: -0;
+	}
 }

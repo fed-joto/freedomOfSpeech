@@ -1,29 +1,47 @@
 $(document).ready(function() {
 
-    var client = algoliasearch('QN7W8E65Q7', 'df6dbaf8b182446775427f304c8004b3');
-
-    var index = client.initIndex('countries');
-
-    index.search('Swede', function(err, content) {
-        console.log(content.hits);
-    });
-
-    var a = document.getElementById("mySvg");
-
-    var svgDoc = a.contentDocument;
-
-    var allPaths = svgDoc.querySelectorAll('path');
+    var countryData = [];
 
     var handleClick = (e) => {
-
-        $.ajax('assets/js/data.json')
-        .then(data => {
-            var countryInfo = document.querySelector('.country-info');
-            countryInfo.classList.toggle('active');
-            e.target.classList.toggle('active-country');
-            countryInfo.querySelector('h2').innerHTML = data[0][e.target.id];
-        });
+        const currCountry = countryData.filter(x => x.id === e.target.id)[0];
+        var countryInfo = document.querySelector('.country-info');
+        countryInfo.classList.toggle('active');
+        e.target.style.fill = 'rgb(' + Math.round(currCountry.score) * 3 + ',' + Math.round(currCountry.score) * 4 + ', 250)';
+        countryInfo.querySelector('h2').innerHTML = currCountry.name;
+        countryInfo.querySelector('.country-info__ranking-number').innerHTML = '# ' + currCountry.rank;
+        countryInfo.querySelector('.country-info__score').innerHTML = currCountry.score;
+        countryInfo.querySelector('.country-info__progression').innerHTML = currCountry.progression;
+        countryInfo.querySelector('.country-info__rank2015').innerHTML = currCountry.rank2015;
+        countryInfo.querySelector('.country-info__score2015').innerHTML = currCountry.score2015;
     }
 
+    var mySvg = document.getElementById('mySvg');
+    var allPaths = mySvg.querySelectorAll('path');
     allPaths.forEach(x => x.addEventListener('click', handleClick));
+
+    $.ajax('assets/data.json')
+    .then(data => {
+        countryData = data;
+    }); 
+
+
+    const search = document.querySelector('.navigation__list-item--search')
+
+    search.addEventListener('click', () => {
+        document.body.classList.toggle('search-visible');
+    })
+
+   const action = document.querySelector('.navigation__list-item--action')
+
+    action.addEventListener('click', () => {
+        document.body.classList.toggle('action-visible');
+    })
+
+     const about = document.querySelector('.navigation__list-item--about')
+
+    about.addEventListener('click', () => {
+        document.body.classList.toggle('about-visible');
+    })
+
+    
 })
