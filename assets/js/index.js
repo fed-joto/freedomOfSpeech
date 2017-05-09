@@ -3,10 +3,12 @@ $(document).ready(function() {
     var countryData = [];
 
     var handleClick = (e) => {
+        console.log(typeof countryData);
+
         const currCountry = countryData.filter(x => x.id === e.target.id)[0];
         var countryInfo = document.querySelector('.country-info');
         countryInfo.classList.toggle('active');
-        e.target.style.fill = 'rgb(' + Math.round(currCountry.score) * 3 + ',' + Math.round(currCountry.score) * 4 + ', 250)';
+        e.target.style.fill = 'rgb(' + Math.round(currCountry.score) * 4 + ', 150 , 100)';
         countryInfo.querySelector('h2').innerHTML = currCountry.name;
         countryInfo.querySelector('.country-info__ranking-number').innerHTML = '# ' + currCountry.rank;
         countryInfo.querySelector('.country-info__score').innerHTML = currCountry.score;
@@ -21,7 +23,7 @@ $(document).ready(function() {
 
     $.ajax('assets/data.json')
     .then(data => {
-        countryData = data;
+        countryData = JSON.parse(data);
     }); 
 
 
@@ -42,6 +44,24 @@ $(document).ready(function() {
     about.addEventListener('click', () => {
         document.body.classList.toggle('about-visible');
     })
+
+
+    // Search
+    const searchBox = document.querySelector('.search-box input');
+    const autocomplete = document.querySelector('.search-box__autocomplete');
+
+    searchBox.addEventListener('keyup', searchResult);
+
+    function searchResult() {
+        const searchStr = searchBox.value;
+        autocomplete.innerHTML = countryData
+            .filter(x => x.name.toLowerCase().includes(searchStr) || x.name.includes(searchStr))
+            .sort((a, b) => a.name > b.name ? 1 : -1)
+            .map(match => `
+                <li class="search-box__item">${match.name}</li>
+            `).join('')
+    }
+
 
     
 })
