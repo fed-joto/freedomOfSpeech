@@ -172,10 +172,32 @@ g path {
 	.search-box {
 		z-index: -0;
 		input {
+			box-sizing: border-box;
 			opacity: 1;
 			transform: scale(1);
 		}
+		&__autocomplete {
+			background: #fff;
+			box-shadow: 0 5px 10px 0 #777;
+			z-index: 99;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			position: absolute;
+			width: 100%;
+			top: 0;
+		}
+		&__item {
+			padding: 5px 10px;
+			border-bottom: 1px solid #777;
+			font-size: 2em;
+		}
 	}
+}
+
+.search-result {
+	position: relative;
+
 }
 
 .action-visible {

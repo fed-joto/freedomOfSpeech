@@ -8,6 +8,9 @@
 	<body>
 		<div class="search-box">
 			<input type="text" placeholder="Search for a country...">
+			<div class="search-result">
+				<ul class="search-box__autocomplete"></ul>
+			</div>
 		</div>
 		<aside class="about">
 			<h3 class="about__title">About</h3>
