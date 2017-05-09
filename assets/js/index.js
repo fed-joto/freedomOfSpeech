@@ -26,4 +26,24 @@ $(document).ready(function() {
     }
 
     allPaths.forEach(x => x.addEventListener('click', handleClick));
+
+    const search = document.querySelector('.navigation__list-item--search')
+
+    search.addEventListener('click', () => {
+        document.body.classList.toggle('search-visible');
+    })
+
+   const action = document.querySelector('.navigation__list-item--action')
+
+    action.addEventListener('click', () => {
+        document.body.classList.toggle('action-visible');
+    })
+
+     const about = document.querySelector('.navigation__list-item--about')
+
+    about.addEventListener('click', () => {
+        document.body.classList.toggle('about-visible');
+    })
+
+    
 })
