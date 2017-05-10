@@ -11,7 +11,8 @@
     "watch:css": "onchange 'assets/sass/**.*' -- npm run build:css",
     "serve": "browser-sync start --proxy localhost:3000 --files './index.php, assets/dist/**.*'",
     "php": "php -S localhost:3000",
-    "start": "npm-run-all --parallel php serve watch:*"
+    "nodeServe": "node index.js",
+    "start": "npm-run-all --parallel nodeServe watch:*"
   },
   "repository": {
     "type": "git",
