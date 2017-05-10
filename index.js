@@ -15,14 +15,14 @@ const client = new Twitter({
 
 app.get('/', (req, res) => {
     client.get('search/tweets', { q: 'freedomofspeech' }, (error, tweets, response) => {
-        console.log(tweets.statuses);
+
         res.render('index', {
             title: 'Freedom of Speech',
             countryData: countryData,
             tweets: tweets.statuses
         });
+
     });
-    
 });
 
 app.listen(3000, function () {

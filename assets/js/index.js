@@ -18,23 +18,19 @@ $(document).ready(function() {
     var allPaths = mySvg.querySelectorAll('path');
     allPaths.forEach(x => x.addEventListener('click', handleClick));
 
-    const search = document.querySelector('.navigation__list-item--search')
+    const menuItems = document.querySelectorAll('.navigation__list-item')
 
-    search.addEventListener('click', () => {
-        document.body.classList.toggle('search-visible');
-    })
+    menuItems.forEach(item => item.addEventListener('click', openSection))
 
-   const action = document.querySelector('.navigation__list-item--action')
+    function openSection(e) {
+        let target = e.target.closest('li').dataset.id;
+        removeAllClasses(document.body);
+        document.body.classList.toggle(target + '-visible');
+    }
 
-    action.addEventListener('click', () => {
-        document.body.classList.toggle('action-visible');
-    })
-
-     const about = document.querySelector('.navigation__list-item--about')
-
-    about.addEventListener('click', () => {
-        document.body.classList.toggle('about-visible');
-    })
+    function removeAllClasses(element) {
+        element.classList = '';
+    }
 
     // Search
     const searchBox = document.querySelector('.search-box input');
@@ -72,24 +68,22 @@ $(document).ready(function() {
 
     function renderPieChart(score, color) {
         new Chart(document.getElementById("doughnut-chart"), {
-    type: 'doughnut',
-    data: {
-      labels: ["Score", "Max är 100"],
-      datasets: [
-        {
-          label: "Population (millions)",
-          backgroundColor: [color, "#f3f3f3"],
-          data: [score,100 - score]
-        }
-      ]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Score 2016'
-      }
-    }
-})
+            type: 'doughnut',
+            data: {
+            labels: ["Score", "Max är 100"],
+            datasets: [{
+                label: "Population (millions)",
+                backgroundColor: [color, "#f3f3f3"],
+                data: [score,100 - score]
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Score 2016'
+                }
+            }
+        });
     }
 
 

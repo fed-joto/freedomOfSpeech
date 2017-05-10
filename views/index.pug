@@ -41,10 +41,10 @@ html(lang="en")
           img(src="./img/Reporters_Without_Borders.svg" alt="Logo")
         nav.navigation
           ul.navigation__list
-            li.navigation__list-item.navigation__list-item--about About
-            li.navigation__list-item.navigation__list-item--action Take action
-            li.navigation__list-item Spread the word
-            li.navigation__list-item.navigation__list-item--search
+            li(class="navigation__list-item navigation__list-item--about" data-id="about") About
+            li(class="navigation__list-item navigation__list-item--action" data-id="action") Take action
+            li(class="navigation__list-item navigation__list-item--twitter" data-id="twitter") Spread the word
+            li(class="navigation__list-item navigation__list-item--search" data-id="search")
               img(src="./img/search.svg" alt="Search icon" width="20")
 
       article.country-info
