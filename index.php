@@ -21,7 +21,7 @@
 			<div class="take-action__action">
 				<img src="" alt="" class="take-action__icon">
 				<h3 class="take-action__title">Share</h3>
-				<p class="take-action__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident labore id quia officia illo optio similique pariatur maiores, eum dolores alias, assumenda, vero velit rerum. Eaque eveniet perferendis quo iste.</p>
+				<p class="take-action__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident labore id quia officia illo optio similique pariatur maiores.</p>
 				<button class="cta">Lorem.</button>
 			</div>
 			<div class="take-action__action">
