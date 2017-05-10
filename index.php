@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Document</title>
+		<title>Freedom Of Speech</title>
 		<link rel="stylesheet" href="assets/dist/index.css">
 	</head>
 	<body>
@@ -44,7 +44,7 @@
 						<li class="navigation__list-item navigation__list-item--about">About</li>
 						<li class="navigation__list-item navigation__list-item--action">Take action</li>
 						<li class="navigation__list-item">Spread the word</li>
-						<li class="navigation__list-item navigation__list-item--search"><img src="img/search.svg" alt="Search icon" width="20"></li>
+						<li class="navigation__list-item navigation__list-item--search"><img src="assets/img/search.svg" alt="Search icon" width="20"></li>
 					</ul>
 				</nav>
 			</header>
@@ -59,10 +59,7 @@
 			</article>
 
 			<main class="map">
-				<!-- <object type="image/svg+xml" data="img/world-map-1.svg" id="mySvg">
-					Your browser does not support SVG
-				</object> -->
-				<?php include 'img/world-map-1.svg' ?>
+				<?php include 'assets/img/world-map-1.svg' ?>
 			</main>
 
 			<section class="twitter">

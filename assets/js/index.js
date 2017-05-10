@@ -23,7 +23,7 @@ $(document).ready(function() {
 
     $.ajax('assets/data.json')
     .then(data => {
-        countryData = JSON.parse(data);
+        countryData = data;
     }); 
 
 
@@ -45,7 +45,6 @@ $(document).ready(function() {
         document.body.classList.toggle('about-visible');
     })
 
-
     // Search
     const searchBox = document.querySelector('.search-box input');
     const autocomplete = document.querySelector('.search-box__autocomplete');
@@ -53,15 +52,28 @@ $(document).ready(function() {
     searchBox.addEventListener('keyup', searchResult);
 
     function searchResult() {
-        const searchStr = searchBox.value;
+        const searchStr = searchBox.value.toLowerCase().trim();
+
+        if (searchStr === '') return autocomplete.innerHTML = '';
+
         autocomplete.innerHTML = countryData
             .filter(x => x.name.toLowerCase().includes(searchStr) || x.name.includes(searchStr))
             .sort((a, b) => a.name > b.name ? 1 : -1)
-            .map(match => `
-                <li class="search-box__item">${match.name}</li>
-            `).join('')
+            .map(match => {
+                let subStr = match.name.toLowerCase().split(searchStr)
+                if (subStr[0].length <= subStr[1].length) {
+                    subStr = subStr[0] +  '<span>' + searchStr +  '</span>' + subStr[1];
+                    console.log('if: ' + subStr)
+                } else {
+                    subStr = subStr[0] +  '<span>' + searchStr +  '</span>';
+                    console.log('else: ' + subStr)
+                }
+
+                return `
+                <li class="search-box__item">${subStr}</li>
+            `}).join('');
+
     }
 
 
-    
 })

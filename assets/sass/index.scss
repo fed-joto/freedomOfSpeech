@@ -191,6 +191,11 @@ g path {
 			padding: 5px 10px;
 			border-bottom: 1px solid #777;
 			font-size: 2em;
+
+			span {
+				background: yellow;
+				font-weight: bold;
+			}
 		}
 	}
 }
