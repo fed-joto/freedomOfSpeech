@@ -2,7 +2,7 @@ body {
 	margin: 0;
 	overflow: hidden;
 	font-family: 'Lato', sans-serif;
-	font-weight: 100;
+	font-weight: 300;
 }
 
 .header {
@@ -83,16 +83,17 @@ body {
 		font-size: 1.12em;
 		line-height: 1.25em;
 		margin: 0;
-		width: 75%;
+		width: 70%;
 	}
 }
 
 .take-action {
-	align-items: center;
-	background: #999;
+	background: #fff;
+	align-items: flex-start;
 	box-shadow: 0 0 20px #666;
 	display: flex;
 	flex-wrap: wrap;
+	height: 50vh;
 	padding: 1em;
 	position: absolute;
 	text-align: center;
@@ -102,8 +103,25 @@ body {
 	z-index: -10;
 
 	&__action {
+		font-family: 'Lato', sans-serif;
+		font-weight: 300;
 		padding: 0 2em;
 		flex: 1 0 230px
+	}
+	&__title {
+		font-weight: 300;
+		font-size: 2em;
+		margin: 0;
+	}
+	&__text {
+		font-size: 1.12em;
+		line-height: 1.25em;
+		margin: 0;
+		padding: 0 0 20px 0;
+	}
+	&__icon {
+		width: 80px;
+		padding: 15px 0 15px 0;
 	}
 }
 
@@ -140,11 +158,15 @@ body {
 }
 
 .cta {
-	background: orange;
+	background: #b90102;
 	border: 0;
+	box-sizing: border-box;
 	color: #fff;
+	font-family: 'Lato', sans-serif;
+	font-weight: 100;
 	font-size: 1.25em;
-	padding: 10px 20px;
+	width: 150px;
+	padding: 7px;
 }
 
 .footer {
@@ -239,7 +261,7 @@ g path {
 
 .action-visible {
 	.wrapper {
-		top: 30vh;
+		top: 50vh;
 		box-shadow: 0px 1px 20px 0px rgba(0,0,0,0.75);
 	}
 
