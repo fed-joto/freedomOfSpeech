@@ -44,17 +44,25 @@ html(lang="en")
             li(class="navigation__list-item navigation__list-item--search" data-id="search")
               img(src="./img/search.svg" alt="Search icon" width="20")
 
-      article.country-info
-        span.country-info__ranking-number
-        h2.country-info__title
-        canvas(id="doughnut-chart" width="800" height="450")
-        p.country-info__score
-        p.country-info__progression
-        p.country-info__rank2015
-        p.country-info__score2015
-
       main.map
         include ../assets/img/world-map-1.svg
+
+      footer.footer
+        ul.ranking-categories
+          li.ranking-categories__item Lorem
+          li.ranking-categories__item Voluptate
+          li.ranking-categories__item Voluptates
+          li.ranking-categories__item Laborum
+          li.ranking-categories__item Quibusdam
+
+    article.country-info
+      span.country-info__ranking-number
+      h2.country-info__title
+      canvas(id="doughnut-chart" width="800" height="450")
+      p.country-info__score
+      p.country-info__progression
+      p.country-info__rank2015
+      p.country-info__score2015
 
     section.twitter
       h3.twitter__title Twitter #FreedomOfSpeech
@@ -65,13 +73,6 @@ html(lang="en")
             p.twitter__text= tweet.text
             span.twitter__username= tweet.user.screen_name
 
-    footer.footer
-      ul.ranking-categories
-        li.ranking-categories__item Lorem
-        li.ranking-categories__item Voluptate
-        li.ranking-categories__item Voluptates
-        li.ranking-categories__item Laborum
-        li.ranking-categories__item Quibusdam
 
     script(src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js")
