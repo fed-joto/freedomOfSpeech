@@ -1,0 +1,83 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title= title
+    link(rel="stylesheet" href="./dist/index.css")
+
+  body
+    .search-box
+      input(type="text" placeholder="Search for a country...")
+      .search-result
+        ul.search-box__autocomplete
+
+    aside.about
+      h3.about__title About
+      p.about__text Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident labore id quia officia illo optio similique pariatur maiores, eum dolores alias, assumenda, vero velit rerum. Eaque eveniet perferendis quo iste.
+
+    aside.take-action
+
+      .take-action__action
+        img(src="" alt="" class="take-action__icon")
+        h3.take-action__title Share
+        p.take-action__text Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident labore id quia officia illo optio similique pariatur maiores, eum dolores alias, assumenda, vero velit rerum. Eaque eveniet perferendis quo iste.
+        button(class="cta") Lorem
+
+      .take-action__action
+        img(src="" alt="" class="take-action__icon")
+        h3.take-action__title Donate
+        p.take-action__text Aliquam sit vero illo autem eaque hic quam id, perferendis quo, ipsa non, voluptatem sint voluptas minima ex ipsum error voluptatibus laudantium beatae modi aperiam. Nesciunt, corrupti assumenda! Earum, nostrum.
+        button.cta Facilis!
+
+      .take-action__action
+        img(src="" alt="" class="take-action__icon")
+        h3.take-action__title Newsletter
+        p.take-action__text Cupiditate magni incidunt vel nemo itaque quo sapiente commodi ipsam. Quas explicabo harum est quia obcaecati, distinctio, itaque quo neque aspernatur iste labore, voluptatem voluptate debitis sequi perspiciatis, possimus sint.
+        button.cta Assumenda
+
+    .wrapper
+      header.header
+        h1.header__logo
+          img(src="./img/Reporters_Without_Borders.svg" alt="Logo")
+        nav.navigation
+          ul.navigation__list
+            li.navigation__list-item.navigation__list-item--about About
+            li.navigation__list-item.navigation__list-item--action Take action
+            li.navigation__list-item Spread the word
+            li.navigation__list-item.navigation__list-item--search
+              img(src="./img/search.svg" alt="Search icon" width="20")
+
+      article.country-info
+        span.country-info__ranking-number
+        h2.country-info__title
+        canvas(id="doughnut-chart" width="800" height="450")
+        p.country-info__score
+        p.country-info__progression
+        p.country-info__rank2015
+        p.country-info__score2015
+
+      main.map
+        include ../assets/img/world-map-1.svg
+
+    section.twitter
+      h3.twitter__title Twitter #FreedomOfSpeech
+      ul.twitter__tweets
+        each tweet in tweets
+          li.twitter__tweet
+            img(src=tweet.user.profile_image_url_https alt="Avatar" class="twitter__user-avatar")
+            p.twitter__text= tweet.text
+            span.twitter__username= tweet.user.screen_name
+
+      footer.footer
+        ul.ranking-categories
+          li.ranking-categories__item Lorem
+          li.ranking-categories__item Voluptate
+          li.ranking-categories__item Voluptates
+          li.ranking-categories__item Laborum
+          li.ranking-categories__item Quibusdam
+
+    script(src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js")
+    script(type='text/javascript').
+      var countryData = !{JSON.stringify(countryData)};
+    script(src="./js/index.js")

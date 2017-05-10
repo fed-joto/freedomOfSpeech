@@ -1,10 +1,6 @@
 $(document).ready(function() {
 
-    var countryData = [];
-
     var handleClick = (e) => {
-        console.log(typeof countryData);
-
         const currCountry = countryData.filter(x => x.id === e.target.id)[0];
         const countryColor = 'rgb(' + Math.round(currCountry.score) * 4 + ', 150 , 100)';
         var countryInfo = document.querySelector('.country-info');
@@ -21,12 +17,6 @@ $(document).ready(function() {
     var mySvg = document.getElementById('mySvg');
     var allPaths = mySvg.querySelectorAll('path');
     allPaths.forEach(x => x.addEventListener('click', handleClick));
-
-    $.ajax('assets/data.json')
-    .then(data => {
-        countryData = JSON.parse(data);
-    }); 
-
 
     const search = document.querySelector('.navigation__list-item--search')
 
