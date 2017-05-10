@@ -6,12 +6,13 @@ $(document).ready(function() {
         console.log(typeof countryData);
 
         const currCountry = countryData.filter(x => x.id === e.target.id)[0];
+        const countryColor = 'rgb(' + Math.round(currCountry.score) * 4 + ', 150 , 100)';
         var countryInfo = document.querySelector('.country-info');
         countryInfo.classList.toggle('active');
-        e.target.style.fill = 'rgb(' + Math.round(currCountry.score) * 4 + ', 150 , 100)';
+        e.target.style.fill = countryColor;
         countryInfo.querySelector('h2').innerHTML = currCountry.name;
         countryInfo.querySelector('.country-info__ranking-number').innerHTML = '# ' + currCountry.rank;
-        countryInfo.querySelector('.country-info__score').innerHTML = currCountry.score;
+        renderPieChart(currCountry.score, countryColor);
         countryInfo.querySelector('.country-info__progression').innerHTML = currCountry.progression;
         countryInfo.querySelector('.country-info__rank2015').innerHTML = currCountry.rank2015;
         countryInfo.querySelector('.country-info__score2015').innerHTML = currCountry.score2015;
@@ -23,7 +24,7 @@ $(document).ready(function() {
 
     $.ajax('assets/data.json')
     .then(data => {
-        countryData = data;
+        countryData = JSON.parse(data);
     }); 
 
 
@@ -74,6 +75,31 @@ $(document).ready(function() {
                 <li class="search-box__item">${subStr}</li>
             `}).join('');
 
+    }
+
+
+    // Pie Charts
+
+    function renderPieChart(score, color) {
+        new Chart(document.getElementById("doughnut-chart"), {
+    type: 'doughnut',
+    data: {
+      labels: ["Score", "Max är 100"],
+      datasets: [
+        {
+          label: "Population (millions)",
+          backgroundColor: [color, "#f3f3f3"],
+          data: [score,100 - score]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Score 2016'
+      }
+    }
+})
     }
 
 

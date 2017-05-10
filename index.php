@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>Freedom Of Speech</title>
 		<link rel="stylesheet" href="assets/dist/index.css">
+		<link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet">
 	</head>
 	<body>
 		<div class="search-box">
@@ -14,7 +15,7 @@
 		</div>
 		<aside class="about">
 			<h3 class="about__title">About</h3>
-			<p class="about__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam atque magnam eveniet consequatur quidem magni iusto nostrum sapiente, beatae tempore, repellendus in rerum odit. Quas, reprehenderit adipisci autem tenetur quaerat aperiam harum. Blanditiis alias voluptatibus pariatur aliquam ex dolores, ut ipsa quidem qui totam illo saepe, earum ducimus atque eum! Explicabo magni nisi fuga maiores velit eos omnis consequatur consectetur laboriosam. Odit, libero qui, culpa porro recusandae quae, laboriosam voluptates adipisci ab doloremque quod quas nesciunt rem nostrum at earum natus pariatur placeat quaerat possimus sequi hic ea reprehenderit! Illo facere, doloremque. Nam quam cupiditate enim, libero facere, laboriosam architecto.</p>
+			<p class="about__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam atque magnam eveniet consequatur quidem magni iusto nostrum sapiente, beatae tempore, repellendus in rerum odit. Quas, reprehenderit adipisci autem tenetur quaerat aperiam harum. Blanditiis alias voluptatibus pariatur aliquam ex dolores, ut ipsa quidem qui totam illo saepe, earum ducimus atque eum! Explicabo magni nisi fuga maiores velit eos omnis consequatur consectetur laboriosam.</p>
 		</aside>
 		<aside class="take-action">
 			<div class="take-action__action">
@@ -38,7 +39,7 @@
 		</aside>
 		<div class="wrapper">
 			<header class="header">
-				<h1 class="header__logo">LOGO</h1>
+				<h1 class="header__logo"><img src="assets/img/Reporters_Without_Borders.svg" alt=""></h1>
 				<nav class="navigation">
 					<ul class="navigation__list">
 						<li class="navigation__list-item navigation__list-item--about">About</li>
@@ -51,7 +52,7 @@
 			<article class="country-info">
 				<span class="country-info__ranking-number"></span>
 				<h2 class="country-info__title"></h2>
-				<p class="country-info__score"></p>
+				<canvas id="doughnut-chart" width="800" height="450"></canvas>
 				<p class="country-info__progression"></p>
 				<p class="country-info__rank2015"></p>
 				<p class="country-info__score2015"></p>
@@ -83,6 +84,7 @@
 				</ul>
 			</footer>
 		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 		<script
   			src="https://code.jquery.com/jquery-3.2.1.min.js"
   			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
