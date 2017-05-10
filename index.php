@@ -51,7 +51,7 @@
 			<article class="country-info">
 				<span class="country-info__ranking-number"></span>
 				<h2 class="country-info__title"></h2>
-				<p class="country-info__score"></p>
+				<canvas id="doughnut-chart" width="800" height="450"></canvas>
 				<p class="country-info__progression"></p>
 				<p class="country-info__rank2015"></p>
 				<p class="country-info__score2015"></p>
@@ -83,6 +83,7 @@
 				</ul>
 			</footer>
 		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 		<script
   			src="https://code.jquery.com/jquery-3.2.1.min.js"
   			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
