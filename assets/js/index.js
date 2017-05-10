@@ -1,20 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const handleClick = (e) => {
-        removeAllClasses(document.body);
+    const countryInfo = document.querySelector('.country-info');
 
-        const currCountry = countryData.filter(x => x.id === e.target.id)[0];
-        window.history.pushState("object or string", "Title", "/" + currCountry.name.toLowerCase());
-        const countryColor = 'rgb(' + Math.round(currCountry.score) * 4 + ', 150 , 100)';
-        var countryInfo = document.querySelector('.country-info');
-        document.body.classList.toggle('country-info-visible');
-        e.target.style.fill = countryColor;
-        countryInfo.querySelector('h2').innerHTML = currCountry.name;
-        countryInfo.querySelector('.country-info__ranking-number').innerHTML = '# ' + currCountry.rank;
-        renderPieChart(currCountry.score, countryColor);
-        countryInfo.querySelector('.country-info__progression').innerHTML = currCountry.progression;
-        countryInfo.querySelector('.country-info__rank2015').innerHTML = currCountry.rank2015;
-        countryInfo.querySelector('.country-info__score2015').innerHTML = currCountry.score2015;
+    const renderCountryInfo = (e) => {
+        document.body.classList = 'country-info-visible';
+        const currCountry = x => x.id === e.target.id;
+    
+        countryInfo.innerHTML = countryData
+            .filter(currCountry)
+            .map(country => {
+                window.history.pushState("object or string", "Title", "/" + country.name.toLowerCase());
+                const countryColor = 'rgb(' + Math.round(country.score) * 4 + ', 150 , 100)';
+                e.target.style.fill = countryColor;
+                return `
+                    <span class="country-info__ranking-number"># ${country.rank}</span>
+                    <h2 class="country-info__title">${country.name}</h2>
+                    <canvas id="doughnut-chart" width="800" height="450"></canvas>
+                    <p class="country-info__progression">${country.progression}</p>
+                    <p class="country-info__rank2015">${country.rank2015}</p>
+                    <p class="country-info__score2015">${country.score2015}</p>
+                `
+            }).join('')
+
+        renderPieChart(country.score, '#550000');
     }
 
     window.onpopstate = (event) => {
@@ -22,17 +30,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const initCountry = (cId) => {
-        removeAllClasses(document.body);
         const currCountry = countryData.filter(x => x.id === cId)[0];
         const countryColor = 'rgb(' + Math.round(currCountry.score) * 4 + ', 150 , 100)';
         var countryInfo = document.querySelector('.country-info');
-        document.body.classList.toggle('country-info-visible');
-        countryInfo.querySelector('h2').innerHTML = currCountry.name;
-        countryInfo.querySelector('.country-info__ranking-number').innerHTML = '# ' + currCountry.rank;
+        document.body.classList = 'country-info-visible';
+
+        countryInfo.innerHTML = `
+            <span class="country-info__ranking-number"># ${currCountry.rank}</span>
+            <h2 class="country-info__title">${currCountry.name}</h2>
+            <canvas id="doughnut-chart" width="800" height="450"></canvas>
+            <p class="country-info__progression">${currCountry.progression}</p>
+            <p class="country-info__rank2015">${currCountry.rank2015}</p>
+            <p class="country-info__score2015">${currCountry.score2015}</p>
+        `;
         renderPieChart(currCountry.score, countryColor);
-        countryInfo.querySelector('.country-info__progression').innerHTML = currCountry.progression;
-        countryInfo.querySelector('.country-info__rank2015').innerHTML = currCountry.rank2015;
-        countryInfo.querySelector('.country-info__score2015').innerHTML = currCountry.score2015;
     }
 
     if (currCountry) {
@@ -41,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const mySvg = document.getElementById('mySvg');
     const allPaths = mySvg.querySelectorAll('path');
-    allPaths.forEach(x => x.addEventListener('click', handleClick));
+    allPaths.forEach(x => x.addEventListener('click', renderCountryInfo));
 
     const menuItems = document.querySelectorAll('.navigation__list-item')
 
@@ -49,12 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openSection(e) {
         let target = e.target.closest('li').dataset.id;
-        removeAllClasses(document.body);
-        document.body.classList.toggle(target + '-visible');
-    }
-
-    function removeAllClasses(element) {
-        element.classList = '';
+        document.body.classList = target + '-visible';
     }
 
     // Search
