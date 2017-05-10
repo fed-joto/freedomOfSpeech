@@ -57,16 +57,17 @@ $(document).ready(function() {
         if (searchStr === '') return autocomplete.innerHTML = '';
 
         autocomplete.innerHTML = countryData
+            // gör om:
             .filter(x => x.name.toLowerCase().includes(searchStr) || x.name.includes(searchStr))
             .sort((a, b) => a.name > b.name ? 1 : -1)
             .map(match => {
+                // Dela matchning på söksträngen
                 let subStr = match.name.toLowerCase().split(searchStr)
+                // Om 
                 if (subStr[0].length <= subStr[1].length) {
                     subStr = subStr[0] +  '<span>' + searchStr +  '</span>' + subStr[1];
-                    console.log('if: ' + subStr)
                 } else {
                     subStr = subStr[0] +  '<span>' + searchStr +  '</span>';
-                    console.log('else: ' + subStr)
                 }
 
                 return `
