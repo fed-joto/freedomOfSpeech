@@ -42,7 +42,7 @@ body {
 	justify-content: center;
 	height: 100vh;
 	width: 100%;
-	#mySvg {
+	#map {
 		width: 70%;
 	}
 }
@@ -223,6 +223,7 @@ body {
 }
 
 g path {
+	cursor: pointer;
 	transition: 400ms all;
 }
 
@@ -252,6 +253,10 @@ g path {
 		opacity: 0;
 		transform: scale(.5);
 		transition: 600ms all;
+
+		&:focus {
+			outline: 0;
+		}
 	}
 }
 
