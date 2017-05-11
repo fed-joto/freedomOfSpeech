@@ -1,60 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const countryInfo = document.querySelector('.country-info');
-
-    const renderCountryInfo = (e) => {
-        document.body.classList = 'country-info-visible';
-        const currCountry = x => x.id === e.target.id;
-    
-        countryInfo.innerHTML = countryData
-            .filter(currCountry)
-            .map(country => {
-                window.history.pushState("object or string", "Title", "/" + country.name.toLowerCase());
-                e.target.style.fill = getColorByScore(country.score);
-                return `
-                    <span class="country-info__ranking-number"># ${country.rank}</span>
-                    <h2 class="country-info__title">${country.name}</h2>
-                    <canvas id="doughnut-chart" width="800" height="450"></canvas>
-                    <p class="country-info__progression">${country.progression}</p>
-                    <p class="country-info__rank2015">${country.rank2015}</p>
-                    <p class="country-info__score2015">${country.score2015}</p>
-                `
-            }).join('')
-
-        renderPieChart(country.score, getColorByScore(country.score));
+    if (currCountry) {
+        prepareCountryInfo(currCountry, document.querySelector('.country-info'));
     }
 
     window.onpopstate = (event) => {
-        console.log(event)
+        console.log(event);
     }
 
-    const initCountry = (cId) => {
-        const currCountry = countryData.filter(x => x.id === cId)[0];
-        var countryInfo = document.querySelector('.country-info');
-        document.body.classList = 'country-info-visible';
+    function setSituationColors() {
+        let elements = document.querySelectorAll('.footer li');
 
-        countryInfo.innerHTML = `
-            <span class="country-info__ranking-number"># ${currCountry.rank}</span>
-            <h2 class="country-info__title">${currCountry.name}</h2>
+        let scores = countryData
+            .sort((a, b) => a.score > b.score ? 1 : -1)
+            .map(x => x.score);
+
+        let max = Math.round(scores.slice(-1)[0] - scores[0]);
+        let avarage = max / elements.length;
+
+        elements.forEach((el, i) => {
+            el.style.color = getColorByScore(i * avarage);
+        });
+    }
+
+    setSituationColors();
+
+    function renderCountryInfo(country) {
+        return `
+            <span class="country-info__ranking-number"># ${country.rank}</span>
+            <h2 class="country-info__title">${country.name}</h2>
             <canvas id="doughnut-chart" width="800" height="450"></canvas>
-            <p class="country-info__progression">${currCountry.progression}</p>
-            <p class="country-info__rank2015">${currCountry.rank2015}</p>
-            <p class="country-info__score2015">${currCountry.score2015}</p>
+            <p class="country-info__progression">${country.progression}</p>
+            <p class="country-info__rank2015">${country.rank2015}</p>
+            <p class="country-info__score2015">${country.score2015}</p>
         `;
-        renderPieChart(currCountry.score, getColorByScore(country.score));
+    } 
+
+    function prepareCountryInfo(country, infoDiv) {
+        document.body.classList = 'country-info-visible';
+        const currCountry = countryData.filter((x) => x.id === country.id)[0];
+        window.history.pushState("object or string", "Title", "/" + currCountry.name.toLowerCase().replace(' ', '-'));
+        document.getElementById(country.id).style.fill = getColorByScore(currCountry.score);
+    
+        infoDiv.innerHTML = renderCountryInfo(currCountry);
+        renderPieChart(currCountry.score, getColorByScore(currCountry.score));
     }
-
-    if (currCountry) {
-        initCountry(currCountry);
-    }
-
-    const mySvg = document.getElementById('mySvg');
-    const allPaths = mySvg.querySelectorAll('path');
-    allPaths.forEach(x => x.addEventListener('click', renderCountryInfo));
-
-    const menuItems = document.querySelectorAll('.navigation__list-item')
-
-    menuItems.forEach(item => item.addEventListener('click', openSection))
 
     function openSection(e) {
         let target = e.target.closest('li').dataset.id;
@@ -78,13 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Search
     const searchBox = document.querySelector('.search-box input');
-    const autocomplete = document.querySelector('.search-box__autocomplete');
-
     searchBox.addEventListener('keyup', searchResult);
 
     function searchResult() {
 
-        allPaths.forEach(x => x.style.fill = '');
+        allCountries.forEach(x => x.style.fill = '');
 
         const searchStr = searchBox.value.toLowerCase().trim();
 
@@ -99,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.querySelectorAll('.search-box__item')
             .forEach(x => x.addEventListener('click', (e) => {
-                window.history.pushState({}, "", e.target.closest('li').innerText)
+                window.history.pushState({}, "", e.target.closest('li').innerText);
             }))
 
     }
@@ -114,11 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
         new Chart(document.getElementById("doughnut-chart"), {
             type: 'doughnut',
             data: {
-            labels: ["Score", "Max är 100"],
+            labels: ["Score", "Max is 100"],
             datasets: [{
                 label: "Population (millions)",
                 backgroundColor: [color, "#f3f3f3"],
-                data: [score,100 - score]
+                data: [score, 100 - score]
                 }]
             },
             options: {
@@ -129,6 +117,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    
+    const allCountries = document.querySelectorAll('path');
+    allCountries.forEach(country => country.addEventListener('click', (e) => {
+        prepareCountryInfo(e.target, document.querySelector('.country-info'));
+    }));
 
+    const menuItems = document.querySelectorAll('.navigation__list-item'); 
+    menuItems.forEach(item => item.addEventListener('click', openSection))
 
-})
+});
