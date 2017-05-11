@@ -118,7 +118,7 @@ body {
 		font-size: 1.12em;
 		line-height: 1.25em;
 		margin: 0;
-		padding: 0 0 20px 0;
+		padding: 0 0 25px 0;
 	}
 	&__icon {
 		width: 80px;
@@ -128,13 +128,14 @@ body {
 
 .twitter {
 	background: #fff;
+	font-family: 'Lato', sans-serif;
 	height: 100vh;
 	position: absolute;
 	top: 0;
 	right: 0;
 	transition: 400ms all ease-in;
 	overflow: scroll;
-	width: 40%;
+	width: 50%;
 	z-index: -9;
 
 	&__tweets {
@@ -146,15 +147,31 @@ body {
 	&__title {
 		padding: 1em 0 0 1em;
 		margin: 0;
+		font-weight: 400;
 	}
 
 	&__tweet {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 		padding: 1em;
-		border-bottom: 1px solid #333;
+		border-bottom: 1px solid #999;
+	}
+
+	&__user-avatar {
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+		padding: 10px;
 	}
 
 	&__text {
-		margin-top: 0;
+		font-size: 0.8em;
+		font-size: 1em;
+		font-weight: 100;
+		line-height: 1.25em;
+		margin: 0;
+		padding: 15px;
 	}
 }
 
@@ -260,7 +277,7 @@ g path {
 
 .twitter-visible {
 	.wrapper {
-		left: -40%;
+		left: -50%;
 		box-shadow: 2px 0px 20px 0px rgba(0,0,0,0.75);
 	}
 }

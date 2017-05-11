@@ -60,7 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openSection(e) {
         let target = e.target.closest('li').dataset.id;
-        document.body.classList = target + '-visible';
+        document.body.classList = ''
+        setTimeout(() => document.body.classList = target + '-visible', 400);
     }
 
     // Search
@@ -101,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Pie Charts
-
     function renderPieChart(score, color) {
         new Chart(document.getElementById("doughnut-chart"), {
             type: 'doughnut',

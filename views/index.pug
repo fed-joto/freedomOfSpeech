@@ -34,8 +34,9 @@ html(lang="en")
 
     .wrapper
       header.header
-        h1.header__logo
-          img(src="./img/Reporters_Without_Borders.svg" alt="Logo")
+        a(href="/")
+          h1.header__logo
+            img(src="./img/Reporters_Without_Borders.svg" alt="Logo")
         nav.navigation
           ul.navigation__list
             li(class="navigation__list-item navigation__list-item--about" data-id="about") About
@@ -71,7 +72,7 @@ html(lang="en")
           li.twitter__tweet
             img(src=tweet.user.profile_image_url_https alt="Avatar" class="twitter__user-avatar")
             p.twitter__text= tweet.text
-            span.twitter__username= tweet.user.screen_name
+              span.twitter__username= tweet.user.screen_name
 
     script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js")
     script(type='text/javascript').
