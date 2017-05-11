@@ -5,6 +5,11 @@ const countryData = require('./assets/data.json');
 
 app.set('view engine', 'pug');
 app.use(express.static('assets'))
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
  
 const client = new Twitter({
   consumer_key: 'xNaVeODPlBAdhkwmL9zmHjOO4',
@@ -13,18 +18,26 @@ const client = new Twitter({
   access_token_secret: 'V6Zz5sf6GXbPc2tKTbMV1rQCCiSiUgODNFpAygYZUYWPo'
 });
 
-app.get('/', (req, res) => {
+app.get('/:country?', (req, res) => {
+
+    const currCountry = req.params.country ? countryData.filter(x => x.name.toLowerCase() === req.params.country)[0].id : '';
+
     client.get('search/tweets', { q: 'freedomofspeech' }, (error, tweets, response) => {
 
         res.render('index', {
             title: 'Freedom of Speech',
             countryData: countryData,
-            tweets: tweets.statuses
+            tweets: tweets.statuses,
+            country: currCountry
         });
 
     });
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+// app.get('/josef', (req, res) => {
+//     res.json(countryData)
+// })
+
+app.listen(3000, () => {
+    console.log('App running on http://localhost:3000');
 });
