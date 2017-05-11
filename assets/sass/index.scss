@@ -50,10 +50,10 @@ body {
 
 .country-info {
 	background: #fff;
-	box-shadow: 0 0 20px #666;
 	height: 100vh;
 	padding: 1em;
 	position: absolute;
+	opacity: 0;
 	overflow: scroll;
 	top: 0;
 	// transform: translateX(-110%);
@@ -71,6 +71,7 @@ body {
 	flex-direction: column;
 	font-family: 'Lato', sans-serif;
 	height: 50%;
+	opacity: 0;
 	padding: 1em;
 	position: absolute;
 	top: 0;
@@ -99,6 +100,7 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	height: 50vh;
+	opacity: 0;
 	padding: 1em;
 	position: absolute;
 	text-align: center;
@@ -138,6 +140,7 @@ body {
 	top: 0;
 	right: 0;
 	transition: 400ms all ease-in;
+	opacity: 0;
 	overflow: scroll;
 	width: 50%;
 	z-index: -9;
@@ -163,8 +166,6 @@ body {
 	}
 
 	&__user-avatar {
-		width: 60px;
-		height: 60px;
 		border-radius: 50%;
 		padding: 10px;
 	}
@@ -176,6 +177,10 @@ body {
 		line-height: 1.25em;
 		margin: 0;
 		padding: 15px;
+	}
+	&__username {
+		display: block;
+		text-align: right;
 	}
 }
 
@@ -212,6 +217,9 @@ body {
 		left: 40%;
 		box-shadow: 2px 0px 20px 0px rgba(0,0,0,0.75);
 	}
+	.country-info {
+		opacity: 1;
+	}
 }
 
 g path {
@@ -220,6 +228,8 @@ g path {
 
 .wrapper {
 	background: #fff;
+	box-sizing: border-box;
+	box-shadow: 0px 1px 20px 0px rgba(0,0,0,0.75);
 	position: absolute;
 	width: 100%;
 	top: 0;
@@ -228,12 +238,14 @@ g path {
 }
 
 .search-box {
-	background: grey;
-	display: none;
-	padding: 5em;
+	background: #fff;
+	opacity: 0;
+	padding: 2em;
 	z-index: -10;
 
 	input {
+		border: 0;
+		border-bottom: 2px solid #ddd;
 		width: 100%;
 		font-size: 3em;
 		padding: .2em;
@@ -245,11 +257,11 @@ g path {
 
 .search-visible {
 	.wrapper {
-		top: 30vh;
+		top: 20vh;
 	}
 
 	.search-box {
-		z-index: -0;
+		opacity: 1;
 		input {
 			box-sizing: border-box;
 			opacity: 1;
@@ -281,8 +293,10 @@ g path {
 
 .twitter-visible {
 	.wrapper {
-		left: -50%;
-		box-shadow: 2px 0px 20px 0px rgba(0,0,0,0.75);
+		left: -50%; 
+	}
+	.twitter {
+		opacity: 1;
 	}
 }
 
@@ -294,21 +308,19 @@ g path {
 .action-visible {
 	.wrapper {
 		top: 50vh;
-		box-shadow: 0px 1px 20px 0px rgba(0,0,0,0.75);
 	}
 
 	.take-action {
-		z-index: -0;
+		opacity: 1;
 	}
 }
 
 .about-visible {
 	.wrapper {
-		top: 40vh;
-		box-shadow: 0px 1px 20px 0px rgba(0,0,0,0.75);
+		top: 50vh;
 	}
 
 	.about {
-		z-index: -0;
+		opacity: 1;
 	}
 }

@@ -10,8 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .filter(currCountry)
             .map(country => {
                 window.history.pushState("object or string", "Title", "/" + country.name.toLowerCase());
-                const countryColor = 'rgb(' + Math.round(country.score) * 4 + ', 150 , 100)';
-                e.target.style.fill = countryColor;
+                e.target.style.fill = getColorByScore(country.score);
                 return `
                     <span class="country-info__ranking-number"># ${country.rank}</span>
                     <h2 class="country-info__title">${country.name}</h2>
@@ -22,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `
             }).join('')
 
-        renderPieChart(country.score, '#550000');
+        renderPieChart(country.score, getColorByScore(country.score));
     }
 
     window.onpopstate = (event) => {
@@ -31,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const initCountry = (cId) => {
         const currCountry = countryData.filter(x => x.id === cId)[0];
-        const countryColor = 'rgb(' + Math.round(currCountry.score) * 4 + ', 150 , 100)';
         var countryInfo = document.querySelector('.country-info');
         document.body.classList = 'country-info-visible';
 
@@ -43,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="country-info__rank2015">${currCountry.rank2015}</p>
             <p class="country-info__score2015">${currCountry.score2015}</p>
         `;
-        renderPieChart(currCountry.score, countryColor);
+        renderPieChart(currCountry.score, getColorByScore(country.score));
     }
 
     if (currCountry) {
@@ -60,8 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openSection(e) {
         let target = e.target.closest('li').dataset.id;
-        document.body.classList = ''
-        setTimeout(() => document.body.classList = target + '-visible', 400);
+        
+        if (document.body.classList == target + '-visible') {
+            return document.body.classList = '';  
+        }
+
+        if (target === 'twitter') {
+            document.body.classList = '';
+            return setTimeout(() => document.body.classList = target + '-visible', 500);
+        }
+
+        document.body.classList = target + '-visible';
     }
 
     // Search
@@ -71,33 +78,29 @@ document.addEventListener('DOMContentLoaded', () => {
     searchBox.addEventListener('keyup', searchResult);
 
     function searchResult() {
+
+        allPaths.forEach(x => x.style.fill = '');
+
         const searchStr = searchBox.value.toLowerCase().trim();
 
-        if (searchStr === '') return autocomplete.innerHTML = '';
+        if (searchStr.length < 1) return;
 
-        autocomplete.innerHTML = countryData
-            // gör om:
-            .filter(x => x.name.toLowerCase().includes(searchStr) || x.name.includes(searchStr))
-            .sort((a, b) => a.name > b.name ? 1 : -1)
-            .map(match => {
-                // Dela matchning på söksträngen
-                let subStr = match.name.toLowerCase().split(searchStr)
-                // Om 
-                if (subStr[0].length <= subStr[1].length) {
-                    subStr = subStr[0] +  '<span>' + searchStr +  '</span>' + subStr[1];
-                } else {
-                    subStr = subStr[0] +  '<span>' + searchStr +  '</span>';
-                }
+        countryData
+            .filter(x => x.name.toLowerCase().indexOf(searchStr) > -1)
+            .forEach(x => {
+                let el = document.getElementById(x.id);
+                el.style.fill = getColorByScore(x.score);
+            });
 
-                return `
-                <li class="search-box__item">${subStr}</li>
-            `}).join('');
-        
         document.querySelectorAll('.search-box__item')
             .forEach(x => x.addEventListener('click', (e) => {
                 window.history.pushState({}, "", e.target.closest('li').innerText)
             }))
 
+    }
+
+    function getColorByScore(score) {
+        return 'rgb(' + Math.round(score) * 4 + ', 150 , 100)';
     }
 
 
