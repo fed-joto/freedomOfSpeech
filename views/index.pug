@@ -70,7 +70,7 @@ html(lang="en")
       ul.twitter__tweets
         each tweet in tweets
           li.twitter__tweet
-            img(src=tweet.user.profile_image_url_https alt="Avatar" class="twitter__user-avatar")
+            img(class="twitter__user-avatar" src=tweet.user.profile_image_url_https alt="Avatar")
             p.twitter__text= tweet.text
               span.twitter__username= tweet.user.screen_name
 

@@ -180,15 +180,6 @@
     "rank2015": 22
   },
   {
-    "id": "WS",
-    "name": "Samoa",
-    "rank": 21,
-    "score": 16.41,
-    "progression": 8,
-    "score2015": 18.8,
-    "rank2015": 29
-  },
-  {
     "id": "CA",
     "name": "Canada",
     "rank": 22,
@@ -234,15 +225,6 @@
     "rank2015": 26
   },
   {
-    "id": "CV",
-    "name": "Cape Verde",
-    "rank": 27,
-    "score": 18.02,
-    "progression": 5,
-    "score2015": 19.82,
-    "rank2015": 32
-  },
-  {
     "id": "LV",
     "name": "Latvia",
     "rank": 28,
@@ -279,15 +261,6 @@
     "rank2015": 39
   },
   {
-    "id": "LI",
-    "name": "Liechtenstein",
-    "rank": 32,
-    "score": 20.31,
-    "progression": -4,
-    "score2015": 18.36,
-    "rank2015": 28
-  },
-  {
     "id": "CL",
     "name": "Chile",
     "rank": 33,
@@ -306,15 +279,6 @@
     "rank2015": 44
   },
   {
-    "id": "AD",
-    "name": "Andorra",
-    "rank": 35,
-    "score": 21.03,
-    "progression": -2,
-    "score2015": 19.87,
-    "rank2015": 33
-  },
-  {
     "id": "LT",
     "name": "Lithuania",
     "rank": 36,
@@ -331,15 +295,6 @@
     "progression": 3,
     "score2015": 22.26,
     "rank2015": 40
-  },
-  {
-    "id": "KY",
-    "name": "OECS",
-    "rank": 38,
-    "score": 22.1,
-    "progression": -8,
-    "score2015": 18.91,
-    "rank2015": 30
   },
   {
     "id": "FR",
@@ -387,15 +342,6 @@
     "rank2015": 41
   },
   {
-    "id": "KM",
-    "name": "Comoros",
-    "rank": 44,
-    "score": 24.33,
-    "progression": 6,
-    "score2015": 24.33,
-    "rank2015": 50
-  },
-  {
     "id": "TW",
     "name": "Taiwan",
     "rank": 45,
@@ -414,15 +360,6 @@
     "rank2015": 49
   },
   {
-    "id": "MT",
-    "name": "Malta",
-    "rank": 47,
-    "score": 24.76,
-    "progression": -1,
-    "score2015": 23.84,
-    "rank2015": 46
-  },
-  {
     "id": "BW",
     "name": "Botswana",
     "rank": 48,
@@ -430,15 +367,6 @@
     "progression": -5,
     "score2015": 22.91,
     "rank2015": 43
-  },
-  {
-    "id": "TO",
-    "name": "Tonga",
-    "rank": 49,
-    "score": 24.97,
-    "progression": -12,
-    "score2015": 21.24,
-    "rank2015": 37
   },
   {
     "id": "AR",
@@ -493,15 +421,6 @@
     "progression": -7,
     "score2015": 24.03,
     "rank2015": 48
-  },
-  {
-    "id": "MU",
-    "name": "Mauritius",
-    "rank": 56,
-    "score": 26.67,
-    "progression": 5,
-    "score2015": 27.69,
-    "rank2015": 61
   },
   {
     "id": "MG",
@@ -648,15 +567,6 @@
     "rank2015": 72
   },
   {
-    "id": "HK",
-    "name": "Hong Kong",
-    "rank": 73,
-    "score": 29.46,
-    "progression": -4,
-    "score2015": 28.5,
-    "rank2015": 69
-  },
-  {
     "id": "HR",
     "name": "Croatia",
     "rank": 74,
@@ -754,15 +664,6 @@
     "progression": 2,
     "score2015": 30.31,
     "rank2015": 88
-  },
-  {
-    "id": "SC",
-    "name": "Seychelles",
-    "rank": 87,
-    "score": 30.86,
-    "progression": 5,
-    "score2015": 30.6,
-    "rank2015": 92
   },
   {
     "id": "GR",
@@ -1024,15 +925,6 @@
     "progression": 6,
     "score2015": 39.83,
     "rank2015": 122
-  },
-  {
-    "id": "MV",
-    "name": "Maldives",
-    "rank": 117,
-    "score": 39.3,
-    "progression": -5,
-    "score2015": 34.17,
-    "rank2015": 112
   },
   {
     "id": "GT",
@@ -1332,15 +1224,6 @@
     "rank2015": 142
   },
   {
-    "id": "SG",
-    "name": "Singapore",
-    "rank": 151,
-    "score": 51.1,
-    "progression": 3,
-    "score2015": 52.96,
-    "rank2015": 154
-  },
-  {
     "id": "SZ",
     "name": "Swaziland",
     "rank": 152,
@@ -1447,15 +1330,6 @@
     "progression": 1,
     "score2015": 57.89,
     "rank2015": 164
-  },
-  {
-    "id": "BH",
-    "name": "Bahrain",
-    "rank": 164,
-    "score": 57.94,
-    "progression": -2,
-    "score2015": 54.86,
-    "rank2015": 162
   },
   {
     "id": "IR",
