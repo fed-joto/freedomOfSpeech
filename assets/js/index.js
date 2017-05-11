@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function openSection(e) {
         let target = e.target.closest('li').dataset.id;
 
-        if (document.body.classList.contains('twitter-visible')) {
+        if (document.body.classList.contains('twitter-visible') && target != 'twitter') {
             document.body.classList = '';
             return setTimeout(() => document.body.classList = target + '-visible', 500);
         }
