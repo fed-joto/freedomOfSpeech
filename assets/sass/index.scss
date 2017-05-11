@@ -24,7 +24,8 @@ body {
 	width: 40%;
 	&__list {
 		display: flex;
-		font-size: 1.25em;
+		font-size: 1em;
+		font-weight: 100;
 		justify-content: space-between;
 		list-style: none;
 		margin: 0;
@@ -34,7 +35,7 @@ body {
 }
 
 .map {
-	background: #d3d3d3;
+	background: #e1e1e1;
 	border: 15px solid #fff;
 	box-sizing: border-box;
 	display: flex;
@@ -163,7 +164,7 @@ body {
 		flex-direction: row;
 		align-items: center;
 		padding: 1em;
-		border-bottom: 1px solid #999;
+		border-bottom: 1px solid #ddd;
 	}
 
 	&__user-avatar {
@@ -241,14 +242,14 @@ g path {
 .search-box {
 	background: #fff;
 	opacity: 0;
-	padding: 2em;
-	z-index: -10;
-
+	padding: 1.5em;
 	input {
 		border: 0;
 		border-bottom: 2px solid #ddd;
+		font-family: 'Lato', sans-serif;
+		font-weight: 300;
 		width: 100%;
-		font-size: 3em;
+		font-size: 2em;
 		padding: .2em;
 		opacity: 0;
 		transform: scale(.5);
@@ -258,7 +259,7 @@ g path {
 
 .search-visible {
 	.wrapper {
-		top: 20vh;
+		top: 15vh;
 	}
 
 	.search-box {
