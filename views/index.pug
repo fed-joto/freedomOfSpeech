@@ -73,10 +73,8 @@ html(lang="en")
             p.twitter__text= tweet.text
             span.twitter__username= tweet.user.screen_name
 
-
-    script(src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js")
     script(type='text/javascript').
-      var currCountry = !{JSON.stringify(country)};
-      var countryData = !{JSON.stringify(countryData)};
+      const currCountry = !{JSON.stringify(country)};
+      const countryData = !{JSON.stringify(countryData)};
     script(src="./js/index.js")

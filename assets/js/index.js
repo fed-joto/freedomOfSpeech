@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.onpopstate = (event) => {
-        // handle navigate back or forward
+        console.log(event)
     }
 
     const initCountry = (cId) => {

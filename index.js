@@ -5,6 +5,11 @@ const countryData = require('./assets/data.json');
 
 app.set('view engine', 'pug');
 app.use(express.static('assets'))
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
  
 const client = new Twitter({
   consumer_key: 'xNaVeODPlBAdhkwmL9zmHjOO4',
@@ -28,6 +33,10 @@ app.get('/:country?', (req, res) => {
 
     });
 });
+
+// app.get('/josef', (req, res) => {
+//     res.json(countryData)
+// })
 
 app.listen(3000, () => {
     console.log('App running on http://localhost:3000');
