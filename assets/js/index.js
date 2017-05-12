@@ -52,6 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const allPaths = mySvg.querySelectorAll('path');
     allPaths.forEach(x => x.addEventListener('click', renderCountryInfo));
 
+    allPaths.forEach(y => y.addEventListener('mouseover', function() {   
+        console.log('hej');
+        // highlight the mouseover target
+        y.style.fill = "orange";
+    }));
+
     const menuItems = document.querySelectorAll('.navigation__list-item')
 
     menuItems.forEach(item => item.addEventListener('click', openSection))
