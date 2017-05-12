@@ -20,7 +20,7 @@ const client = new Twitter({
 
 app.get('/:country?', (req, res) => {
 
-    const currCountry = req.params.country ? countryData.filter(x => x.name.toLowerCase() === req.params.country)[0].id : '';
+    const currCountry = req.params.country ? countryData.filter(x => x.name.toLowerCase() === req.params.country.replace('-', ' '))[0] : '';
 
     client.get('search/tweets', { q: 'freedomofspeech' }, (error, tweets, response) => {
 
@@ -33,10 +33,6 @@ app.get('/:country?', (req, res) => {
 
     });
 });
-
-// app.get('/josef', (req, res) => {
-//     res.json(countryData)
-// })
 
 app.listen(3000, () => {
     console.log('App running on http://localhost:3000');
