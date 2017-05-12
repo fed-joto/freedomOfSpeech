@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setSituationColors();
 
+    // const menuItems = document.querySelectorAll('.navigation__list-item')
+
     function renderCountryInfo(country) {
         return `
             <span class="country-info__ranking-number"># ${country.rank}</span>
@@ -125,5 +127,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const menuItems = document.querySelectorAll('.navigation__list-item'); 
     menuItems.forEach(item => item.addEventListener('click', openSection))
+
+    allCountries.forEach(y => y.addEventListener('mouseover', function() {   
+        console.log(y);
+    //     // highlight the mouseover target
+        y.style.fill = 'pink';
+    }));
+    allCountries.forEach(z => z.addEventListener("mouseout", function() {   
+        z.style.fill = '';
+    }));
+
 
 });
