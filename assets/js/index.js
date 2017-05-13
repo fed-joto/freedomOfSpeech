@@ -48,22 +48,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openSection(e) {
         let target = e.target.closest('li').dataset.id;
+        let bodyClass = document.body.classList;
 
-        if (document.body.classList.contains('twitter-visible') && target != 'twitter') {
-            document.body.classList = '';
-            return setTimeout(() => document.body.classList = target + '-visible', 500);
+        if (bodyClass.contains('twitter-visible') && target != 'twitter') {
+            bodyClass = '';
+            return setTimeout(() => bodyClass = target + '-visible', 500);
         }
         
-        if (document.body.classList == target + '-visible') {
-            return document.body.classList = '';  
+        if (bodyClass == target + '-visible') {
+            return bodyClass = '';  
         }
 
         if (target === 'twitter') {
-            document.body.classList = '';
-            return setTimeout(() => document.body.classList = target + '-visible', 500);
+            bodyClass = '';
+            return setTimeout(() => bodyClass = target + '-visible', 500);
         }
 
-        document.body.classList = target + '-visible';
+        bodyClass = target + '-visible';
     }
 
     // Search
@@ -95,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function getColorByScore(score) {
         return 'rgb(' + Math.round(score) * 4 + ', 150 , 100)';
     }
-
 
     // Pie Charts
     function renderPieChart(score, color) {
