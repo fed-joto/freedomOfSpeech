@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setSituationColors();
 
+    // const menuItems = document.querySelectorAll('.navigation__list-item')
+
     function renderCountryInfo(country) {
         return `
             <span class="country-info__ranking-number"># ${country.rank}</span>
@@ -50,21 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let target = e.target.closest('li').dataset.id;
         let bodyClass = document.body.classList;
 
-        if (bodyClass.contains('twitter-visible') && target != 'twitter') {
-            bodyClass = '';
-            return setTimeout(() => bodyClass = target + '-visible', 500);
-        }
-        
-        if (bodyClass == target + '-visible') {
-            return bodyClass = '';  
-        }
-
-        if (target === 'twitter') {
-            bodyClass = '';
-            return setTimeout(() => bodyClass = target + '-visible', 500);
-        }
-
-        bodyClass = target + '-visible';
+        if (bodyClass.contains(target + '-visible')) return document.body.classList = '';
+        document.body.classList = '';
+        bodyClass.add(target + '-visible');
     }
 
     // Search
@@ -125,5 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const menuItems = document.querySelectorAll('.navigation__list-item'); 
     menuItems.forEach(item => item.addEventListener('click', openSection))
+
+    allCountries.forEach(country => {
+        country.addEventListener('mouseover', el => el.target.style.fill = 'pink');
+        country.addEventListener('mouseout', el =>  el.target.style.fill = '');
+    });
 
 });
