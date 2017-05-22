@@ -8,29 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(event);
     }
 
-    function setSituationColors() {
-        let elements = document.querySelectorAll('.footer li');
-
-        let scores = countryData
-            .sort((a, b) => a.score > b.score ? 1 : -1)
-            .map(x => x.score);
-
-        let max = Math.round(scores.slice(-1)[0] - scores[0]);
-        let avarage = max / elements.length;
-
-        elements.forEach((el, i) => {
-            el.style.color = getColorByScore(i * avarage);
-        });
-    }
-
-    setSituationColors();
-
-    // const menuItems = document.querySelectorAll('.navigation__list-item')
-
     function renderCountryInfo(country) {
         return `
             <span class="country-info__ranking-number"># ${country.rank}</span>
-            <h2 class="country-info__title">${country.name}</h2>
+            <h2 class="country-info__title" data-id="${country.id}">${country.name}</h2>
             <canvas id="doughnut-chart" width="800" height="450"></canvas>
             <p class="country-info__progression">${country.progression}</p>
             <p class="country-info__rank2015">${country.rank2015}</p>
@@ -39,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } 
 
     function prepareCountryInfo(country, infoDiv) {
+        if (country.id === document.querySelector('.country-info__title').dataset['id']) return removeAllBodyClasses();
         document.body.classList = 'country-info-visible';
         const currCountry = countryData.filter((x) => x.id === country.id)[0];
         window.history.pushState("object or string", "Title", "/" + currCountry.name.toLowerCase().replace(' ', '-'));
@@ -75,16 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 let el = document.getElementById(x.id);
                 el.style.fill = getColorByScore(x.score);
             });
-
-        document.querySelectorAll('.search-box__item')
-            .forEach(x => x.addEventListener('click', (e) => {
-                window.history.pushState({}, "", e.target.closest('li').innerText);
-            }))
-
     }
 
     function getColorByScore(score) {
         return 'rgb(' + Math.round(score) * 4 + ', 150 , 100)';
+    }
+
+    function removeAllBodyClasses() {
+        history.pushState(null, null, '/');
+        return document.body.classList = '';
     }
 
     // Pie Charts
@@ -110,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const allCountries = document.querySelectorAll('path');
     allCountries.forEach(country => country.addEventListener('click', (e) => {
+        e.stopPropagation();
         prepareCountryInfo(e.target, document.querySelector('.country-info'));
     }));
 
@@ -120,5 +102,52 @@ document.addEventListener('DOMContentLoaded', () => {
         country.addEventListener('mouseover', el => el.target.style.fill = 'pink');
         country.addEventListener('mouseout', el =>  el.target.style.fill = '');
     });
+
+
+    document.querySelector('.map').addEventListener('click', removeAllBodyClasses);
+
+    // gör om gör rätt:
+    document.querySelector('.header__logo').addEventListener('click', removeAllBodyClasses);
+
+    const situationNumbers = [
+        { name: 'Good', min: 0, max: 20, color: 'rgb(255, 255, 255)', class: 'good' },
+        { name: 'Satisfactory situation', min: 20, max: 40, color: 'rgb(30, 250, 200)', class: 'satisfactory' },
+        { name: 'Noticable problem', min: 40, max: 60, color: 'rgb(200, 170, 20)', class: 'noticable' },
+        { name: 'Difficult situation', min: 60, max: 80, color: 'rgb(230, 30, 0)', class: 'difficult' },
+        { name: 'Very serious situation', min: 80, max: 100, color: 'rgb(0, 0, 0)', class: 'serious' }
+    ];
+
+    situationNumbers.forEach(situation => {
+        const el = document.createElement('li');
+        el.dataset['min'] = situation.min;
+        el.dataset['max'] = situation.max;
+        el.innerHTML = situation.name;
+        el.classList.add('ranking-categories__item');
+        
+        el.addEventListener('mouseover', e => {
+            countryData
+                .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
+                .forEach(x => document.getElementById(x.id).classList.add(situation.class));
+        });
+        el.addEventListener('mouseleave', removeClass);
+
+        el.addEventListener('click', e => {
+            countryData
+                .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
+                .forEach(x => document.getElementById(x.id).classList.add(situation.class));
+            document.querySelectorAll('.ranking-categories__item').forEach(situation => situation.addEventListener('mouseover', e => {
+                countryData
+                    .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
+                    .forEach(x => document.getElementById(x.id).classList.add(situation.class));
+            }));
+            e.target.removeEventListener('mouseleave', removeClass);
+        });
+
+        document.querySelector('.ranking-categories').appendChild(el);
+    });
+
+    function removeClass() {
+        allCountries.forEach(x => x.classList = '');
+    }
 
 });
