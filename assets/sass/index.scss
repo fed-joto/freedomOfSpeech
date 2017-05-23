@@ -1,3 +1,5 @@
+$primaryColor: #b90102;
+
 body {
 	color: #525c65;
 	margin: 0;
@@ -113,7 +115,7 @@ body {
 		font-family: 'Lato', sans-serif;
 		font-weight: 300;
 		padding: 0 2em;
-		flex: 1 0 230px
+		flex: 1 0 230px;
 	}
 	&__title {
 		font-weight: 300;
@@ -193,7 +195,7 @@ body {
 }
 
 .cta {
-	background: #b90102;
+	background: $primaryColor;
 	border: 0;
 	box-sizing: border-box;
 	color: #fff;
@@ -341,9 +343,6 @@ path {
 		opacity: 1;
 	}
 }
-
-.good { fill: rgb(255, 255, 255); }
-.satisfactory { fill: rgb(30, 250, 200); }
-.noticable { fill: rgb(200, 170, 20); }
-.difficult { fill: rgb(230, 30, 0); }
-.serious { fill: rgb(0, 0, 0); }
+.good, .satisfactory, .noticable, .difficult, .serious {
+	color: $primaryColor;
+}
