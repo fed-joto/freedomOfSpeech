@@ -7,12 +7,55 @@ html(lang="en")
     link(href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel="stylesheet")
 
   body
+    script(type='text/javascript').
+      function statusChangeCallback(res) {
+          if (res.status === 'connected') {
+            shareOnFacebook();
+          } else {
+            FB.login(shareOnFacebook, { scope: ['public_profile'] })
+          }
+      }
+
+      function checkLoginState() {
+          FB.getLoginStatus(statusChangeCallback) // callback called with response
+      }
+
+      window.fbAsyncInit = () => {
+        FB.init({
+            appId      : '1244947348881820',
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v2.8'
+        })
+
+      };
+
+      (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0]
+          if (d.getElementById(id)) return
+          js = d.createElement(s); js.id = id
+          js.src = "//connect.facebook.net/en_US/sdk.js"
+          fjs.parentNode.insertBefore(js, fjs)
+      }(document, 'script', 'facebook-jssdk'))
+
+      function testAPI() {
+        FB.getLoginStatus(statusChangeCallback)
+      }
+
+      function shareOnFacebook() {
+        FB.ui({
+          method: 'share',
+          href: 'https://www.reporterswithoutborders.com/',
+        }, () => {
+          document.body.classList = '';
+        });
+      }
+    
     .search-box
       input(type="text" placeholder="Search for a country...")
-      .search-result
-        ul.search-box__autocomplete
 
     aside.about
+      fb:login-button(scope="public_profile,email" onlogin="checkLoginState();")
       h3.about__title About
       p.about__text Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident labore id quia officia illo optio similique pariatur maiores, eum dolores alias, assumenda, vero velit rerum. Eaque eveniet perferendis quo iste.
 
@@ -21,7 +64,7 @@ html(lang="en")
       .take-action__action
         img(src="./img/paper-plane.svg" alt="Share" class="take-action__icon")
         p.take-action__text Lorem ipsum dolor sit amet, consectetur adipisicing elit illo optio similique.
-        button(class="cta") Share
+        button(class="cta" onClick="testAPI()") Share
 
       .take-action__action
         img(src="./img/donation.svg" alt="Donate" class="take-action__icon")
@@ -50,11 +93,6 @@ html(lang="en")
 
       footer.footer
         ul.ranking-categories
-          //- li.ranking-categories__item Good situation
-          //- li.ranking-categories__item Satisfactory situation
-          //- li.ranking-categories__item Noticable problem
-          //- li.ranking-categories__item Difficult situation
-          //- li.ranking-categories__item Very serious situation
 
     article.country-info
       span.country-info__ranking-number
