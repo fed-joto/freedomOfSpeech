@@ -6,20 +6,6 @@ body {
 	font-weight: 300;
 }
 
-// .header {
-// 	box-sizing: border-box;
-// 	display: flex;
-// 	align-items: center;
-// 	justify-content: space-between;
-// 	padding: 30px;
-// 	position: absolute;
-// 	width: 100%;
-// 	&__logo {
-// 		margin: 0;
-// 		transition: 400ms all ease-in;
-// 	}
-// }
-
 .header__logo {
 	position: absolute;
 	top: 5vh;
@@ -73,7 +59,7 @@ body {
 	// transform: translateX(-110%);
 	transition: 400ms all ease-in;
 	width: 40%;
-	z-index: -10;
+	z-index: -15;
 	&__ranking-number {
 		font-size: 5em;
 	}

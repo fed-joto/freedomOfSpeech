@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (country.id === document.querySelector('.country-info__title').dataset['id']) return removeAllBodyClasses();
         document.body.classList = 'country-info-visible';
         const currCountry = countryData.filter((x) => x.id === country.id)[0];
-        window.history.pushState("object or string", "Title", "/" + currCountry.name.toLowerCase().replace(' ', '-'));
+        history.pushState("object or string", "Title", "/" + currCountry.name.toLowerCase().replace(' ', '-'));
         document.getElementById(country.id).style.fill = getColorByScore(currCountry.score);
     
         infoDiv.innerHTML = renderCountryInfo(currCountry);

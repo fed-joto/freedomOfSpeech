@@ -20,7 +20,9 @@ const client = new Twitter({
 
 app.get('/:country?', (req, res) => {
 
-    const currCountry = req.params.country ? countryData.filter(x => x.name.toLowerCase() === req.params.country.replace('-', ' '))[0] : '';
+    const currCountry = req.params.country
+        ? countryData.filter(x => x.name.toLowerCase() === req.params.country.replace('-', ' '))[0]
+        : '';
 
     client.get('search/tweets', { q: 'freedomofspeech' }, (error, tweets, response) => {
 
