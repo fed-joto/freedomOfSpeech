@@ -59,15 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    function getColorByScore(score) {
-        return 'rgb(' + Math.round(score) * 4 + ', 150 , 100)';
-    }
-
-    function removeAllBodyClasses() {
-        history.pushState(null, null, '/');
-        return document.body.classList = '';
-    }
-
     // Pie Charts
     function renderPieChart(score, color) {
         new Chart(document.getElementById("doughnut-chart"), {
@@ -148,6 +139,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function removeClass() {
         allCountries.forEach(x => x.classList = '');
+    }
+    
+    function getColorByScore(score) {
+        return 'rgb(' + Math.round(score) * 4 + ', 150 , 100)';
+    }
+
+    function removeAllBodyClasses() {
+        history.pushState(null, null, '/');
+        return document.body.classList = '';
     }
 
 });
