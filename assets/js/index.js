@@ -1,5 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const slider = HammerSlider(document.getElementById('hammer-slider'), {
+      slideSpeed: 60,
+      slideShow: false,
+      dots: false,
+      mouseDrag: true,
+      beforeSlideChange: (targetSlide) => {
+        console.log('Changing to slide number: ' + targetSlide);
+      }
+    });
+
+    const modal = document.querySelector('.modal');
+    const btn = document.getElementById('close');
+
+    btn.addEventListener('click', closeModal);
+
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
     if (currCountry) {
         prepareCountryInfo(currCountry, document.querySelector('.country-info'));
     }

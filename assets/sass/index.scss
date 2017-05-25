@@ -1,3 +1,5 @@
+
+
 body {
 	color: #525c65;
 	margin: 0;
@@ -5,6 +7,9 @@ body {
 	font-family: 'Lato', sans-serif;
 	font-weight: 300;
 }
+
+.modal { display: none; }
+.c-slider { display: none; }
 
 .header__logo {
 	position: absolute;
@@ -347,3 +352,7 @@ path {
 .noticable { fill: rgb(200, 170, 20); }
 .difficult { fill: rgb(230, 30, 0); }
 .serious { fill: rgb(0, 0, 0); }
+
+@media screen and (max-width: 950px) {
+	@import "_mobile";
+}
