@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Mobile version
+
     const slider = HammerSlider(document.getElementById('hammer-slider'), {
       slideSpeed: 60,
       slideShow: false,
@@ -18,6 +20,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeModal() {
         modal.style.display = "none";
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    // Desktop version
 
     if (currCountry) {
         prepareCountryInfo(currCountry, document.querySelector('.country-info'));
