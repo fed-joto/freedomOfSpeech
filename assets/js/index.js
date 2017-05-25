@@ -1,12 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const socket = io.connect('http://localhost:3000');
+    socket.on('stream', console.log);
+    socket.send('Hello from front end');
+
+//    h3.twitter__title Twitter #FreedomOfSpeech
+//    ul.twitter__tweets
+//    each tweet in tweets
+//    li.twitter__tweet
+//    img(class="twitter__user-avatar" src=tweet.user.profile_image_url_https alt="Avatar")
+//    .twitter__content
+//    span.twitter__username= tweet.user.screen_name
+//    p.twitter__text= tweet.text
+//
+    var stream = client.stream('statuses/filter', {track: 'javascript'});
+    stream.on('data', function(event) {
+      console.log(event && event.text);
+    });
+
+    stream.on('error', function(error) {
+          throw error;
+    });
+
+
     if (currCountry) {
         prepareCountryInfo(currCountry, document.querySelector('.country-info'));
     }
 
-    window.onpopstate = (event) => {
-        console.log(event);
-    }
+    window.onpopstate = event => console.log(event);
 
     function renderCountryInfo(country) {
         return `
@@ -17,15 +38,16 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="country-info__rank2015">${country.rank2015}</p>
             <p class="country-info__score2015">${country.score2015}</p>
         `;
-    } 
+    }
 
     function prepareCountryInfo(country, infoDiv) {
         if (country.id === document.querySelector('.country-info__title').dataset['id']) return removeAllBodyClasses();
+
         document.body.classList = 'country-info-visible';
         const currCountry = countryData.filter((x) => x.id === country.id)[0];
         history.pushState("object or string", "Title", "/" + currCountry.name.toLowerCase().replace(' ', '-'));
         document.getElementById(country.id).style.fill = getColorByScore(currCountry.score);
-    
+
         infoDiv.innerHTML = renderCountryInfo(currCountry);
         renderPieChart(currCountry.score, getColorByScore(currCountry.score));
     }
@@ -79,15 +101,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
     const allCountries = document.querySelectorAll('path');
     allCountries.forEach(country => country.addEventListener('click', (e) => {
         e.stopPropagation();
         prepareCountryInfo(e.target, document.querySelector('.country-info'));
     }));
 
-    const menuItems = document.querySelectorAll('.navigation__list-item'); 
-    menuItems.forEach(item => item.addEventListener('click', openSection))
+    const menuItems = document.querySelectorAll('.navigation__list-item');
+    menuItems.forEach(item => item.addEventListener('click', openSection));
 
     allCountries.forEach(country => {
         country.addEventListener('mouseover', el => el.target.style.fill = 'pink');
@@ -114,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el.dataset['max'] = situation.max;
         el.innerHTML = situation.name;
         el.classList.add('ranking-categories__item');
-        
+
         el.addEventListener('mouseover', e => {
             countryData
                 .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
@@ -140,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function removeClass() {
         allCountries.forEach(x => x.classList = '');
     }
-    
+
     function getColorByScore(score) {
         return 'rgb(' + Math.round(score) * 4 + ', 150 , 100)';
     }

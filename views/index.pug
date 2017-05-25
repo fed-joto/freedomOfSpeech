@@ -73,7 +73,7 @@ html(lang="en")
             .twitter__content
               span.twitter__username= tweet.user.screen_name
               p.twitter__text= tweet.text
-
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js")
     script(type='text/javascript').
       const currCountry = !{JSON.stringify(country)};
