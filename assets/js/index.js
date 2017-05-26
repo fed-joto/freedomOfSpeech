@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.querySelector('.wrapper');
     const mobileMenu = document.querySelector('.mobile__menu');
     const menuIcon = document.querySelector('.navigation--mobile');
-    menuIcon.addEventListener('click', () => {
-        removeAllBodyClasses();
+    menuIcon.addEventListener('click', (e) => {
+        removeAllBodyClasses(e);
         mobileMenu.classList.add('mobile__menu--active');
     });
 
@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const close = document.getElementById('close');
     close.addEventListener('click', closeMenu);
 
-    function closeMenu() {
+    function closeMenu(e) {
        mobileMenu.classList.remove('mobile__menu--active');
-       return removeAllBodyClasses();    
+       return removeAllBodyClasses(e);
     }
 
 
@@ -99,16 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.ranking-categories').appendChild(el);
     });
 
-    const socket = io.connect('http://localhost:3000');
-    socket.on('stream', tweet => `
-        <li class="twitter__tweet">
-            <img class="twitter__user-avatar" src="${tweet.user.profile_image_url_https}" alt="Avatar">
-            <div class="twitter__content">
-                <span class="twitter__username">${tweet.user.screen_name}</span>
-                <p class="twitter__text">${tweet.text}</p>
-            </div>
-        </li>
-    `);
+    // const socket = io.connect('http://localhost:3000');
+    // socket.on('stream', tweet => `
+    //     <li class="twitter__tweet">
+    //         <img class="twitter__user-avatar" src="${tweet.user.profile_image_url_https}" alt="Avatar">
+    //         <div class="twitter__content">
+    //             <span class="twitter__username">${tweet.user.screen_name}</span>
+    //             <p class="twitter__text">${tweet.text}</p>
+    //         </div>
+    //     </li>
+    // `);
 
    if (currCountry) {
         prepareCountryInfo(currCountry, document.querySelector('.country-info'));
