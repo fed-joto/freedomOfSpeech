@@ -2,16 +2,14 @@
   "name": "freedomofspeech",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "sass": "node-sass assets/sass --output-style compressed -o assets/dist/",
     "autoprefixer": "postcss -u autoprefixer -r assets/dist/*.css",
     "build:css": "npm run sass && npm run autoprefixer",
     "watch:css": "onchange 'assets/sass/**.*' -- npm run build:css",
-    "serve": "browser-sync start --proxy localhost:3000 --files './index.php, assets/dist/**.*'",
-    "php": "php -S localhost:3000",
-    "nodeServe": "nodemon index.js",
+    "nodeServe": "nodemon server.js",
     "start": "npm-run-all --parallel nodeServe watch:*"
   },
   "repository": {
@@ -38,7 +36,9 @@
   },
   "dependencies": {
     "express": "^4.15.2",
+    "http": "0.0.0",
     "pug": "^2.0.0-rc.1",
+    "socket.io": "^2.0.1",
     "twitter": "^1.7.0"
   }
 }

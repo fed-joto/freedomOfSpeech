@@ -1,3 +1,5 @@
+$primaryColor: #b90102;
+
 body {
 	color: #525c65;
 	margin: 0;
@@ -15,7 +17,7 @@ body {
 }
 
 .navigation {
-	position: absolute;
+    position: absolute;
 	height: 47px;
 	top: 5vh;
 	right: 5vh;
@@ -46,7 +48,6 @@ body {
 		width: 70%;
 	}
 }
-
 
 .country-info {
 	background: #f4f4f4;
@@ -113,7 +114,7 @@ body {
 		font-family: 'Lato', sans-serif;
 		font-weight: 300;
 		padding: 0 2em;
-		flex: 1 0 230px
+		flex: 1 0 230px;
 	}
 	&__title {
 		font-weight: 300;
@@ -156,7 +157,7 @@ body {
 		margin: 0;
 		font-weight: 400;
 	}
-
+    
 	&__tweet {
 		background: #fff;
 		border-radius: 5px;
@@ -193,7 +194,7 @@ body {
 }
 
 .cta {
-	background: #b90102;
+	background: $primaryColor;
 	border: 0;
 	box-sizing: border-box;
 	color: #fff;
@@ -280,31 +281,11 @@ path {
 
 	.search-box {
 		opacity: 1;
+        z-index: 0;
 		input {
 			box-sizing: border-box;
 			opacity: 1;
 			transform: scale(1);
-		}
-		&__autocomplete {
-			background: #fff;
-			box-shadow: 0 5px 10px 0 #777;
-			z-index: 99;
-			margin: 0;
-			padding: 0;
-			list-style: none;
-			position: absolute;
-			width: 100%;
-			top: 0;
-		}
-		&__item {
-			padding: 5px 10px;
-			border-bottom: 1px solid #777;
-			font-size: 2em;
-
-			span {
-				background: yellow;
-				font-weight: bold;
-			}
 		}
 	}
 }
@@ -342,8 +323,6 @@ path {
 	}
 }
 
-.good { fill: rgb(255, 255, 255); }
-.satisfactory { fill: rgb(30, 250, 200); }
-.noticable { fill: rgb(200, 170, 20); }
-.difficult { fill: rgb(230, 30, 0); }
-.serious { fill: rgb(0, 0, 0); }
+.active {
+    fill: $primaryColor;
+}
