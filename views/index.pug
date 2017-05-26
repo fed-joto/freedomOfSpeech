@@ -1,63 +1,25 @@
 doctype html
 html(lang="en")
   head
-    meta(charset="UTF-8")
     title= title
+    meta(charset="UTF-8")
+    meta(property="og:image" content="http://example.com/ogp.jpg")
+    meta(property="og:image:secure_url" content="https://secure.example.com/ogp.jpg")
+    meta(property="og:image:type" content="image/jpeg")
+    meta(property="og:image:width" content="400")
+    meta(property="og:image:height" content="300")
     link(rel="stylesheet" href="./dist/index.css")
     link(href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel="stylesheet")
     link(rel="stylesheet" href="./dist/hammerslider.required.css")
     meta(name="viewport",content="width=device-width, initial-scale=1.0")
 
   body
-    script(type='text/javascript').
-      function statusChangeCallback(res) {
-          if (res.status === 'connected') {
-            shareOnFacebook();
-          } else {
-            FB.login(shareOnFacebook, { scope: ['public_profile'] })
-          }
-      }
+    script(src="./js/facebook.js")
 
-      function checkLoginState() {
-          FB.getLoginStatus(statusChangeCallback) // callback called with response
-      }
-
-      window.fbAsyncInit = () => {
-        FB.init({
-            appId      : '1244947348881820',
-            cookie     : true,
-            xfbml      : true,
-            version    : 'v2.8'
-        })
-
-      };
-
-      (function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0]
-          if (d.getElementById(id)) return
-          js = d.createElement(s); js.id = id
-          js.src = "//connect.facebook.net/en_US/sdk.js"
-          fjs.parentNode.insertBefore(js, fjs)
-      }(document, 'script', 'facebook-jssdk'))
-
-      function testAPI() {
-        FB.getLoginStatus(statusChangeCallback)
-      }
-
-      function shareOnFacebook() {
-        FB.ui({
-          method: 'share',
-          href: 'https://www.reporterswithoutborders.com/',
-        }, () => {
-          document.body.classList = '';
-        });
-      }
-    
     .search-box
       input(type="text" placeholder="Search for a country...")
 
     aside.about
-      fb:login-button(scope="public_profile,email" onlogin="checkLoginState();")
       h3.about__title About
       p.about__text Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident labore id quia officia illo optio similique pariatur maiores, eum dolores alias, assumenda, vero velit rerum. Eaque eveniet perferendis quo iste.
 
@@ -79,26 +41,6 @@ html(lang="en")
         button.cta Newletter
 
     .wrapper
-      div(class="modal" id="myModal")
-        .modal__box
-          img(src="img/cross-out.svg" alt="" class="close" id="close")
-          img(src="img/feather-and-ink.svg" alt="" class="box__img")
-          .text
-            h2.title World Press Freedom Index
-            p.paragraph Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed est felis. Sed non pharetra ipsum.
-
-      div(class="c-slider" id="hammer-slider")
-        .c-slider__container
-          .c-slider__slide
-            include ../assets/img/north-america.svg
-          .c-slider__slide
-            include ../assets/img/south-america.svg
-          .c-slider__slide
-            include ../assets/img/africa.svg
-          .c-slider__slide
-            include ../assets/img/europe.svg
-
-      //- header.header
       h1.header__logo
         img(src="./img/Reporters_Without_Borders.svg" alt="Logo")
       nav.navigation
@@ -109,8 +51,26 @@ html(lang="en")
           li(class="navigation__list-item navigation__list-item--search" data-id="search")
             img(src="./img/search.svg" alt="Search icon" width="16")
 
-      main.map
-        include ../assets/img/map.svg
+      script(type='text/javascript').
+        if (window.innerWidth < 950) {
+          return `div(class="c-slider" id="hammer-slider")
+            .c-slider__container
+              .c-slider__slide
+                include ../assets/img/north-america.svg
+              .c-slider__slide
+                include ../assets/img/south-america.svg
+              .c-slider__slide
+                include ../assets/img/africa.svg
+              .c-slider__slide
+                include ../assets/img/europe.svg`
+        } else {
+          return `main.map
+            include ../assets/img/map.svg`
+        }
+
+      
+
+      
 
       footer.footer
         ul.ranking-categories
@@ -133,10 +93,12 @@ html(lang="en")
             .twitter__content
               span.twitter__username= tweet.user.screen_name
               p.twitter__text= tweet.text
-
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js")
     script(type='text/javascript').
       const currCountry = !{JSON.stringify(country)};
       const countryData = !{JSON.stringify(countryData)};
+
     script(src="./js/hammerslider.min.js")
     script(src="./js/index.js")
+
