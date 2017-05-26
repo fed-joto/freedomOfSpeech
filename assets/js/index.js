@@ -1,29 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const socket = io.connect('http://localhost:3000');
-    socket.on('stream', console.log);
-    socket.send('Hello from front end');
-
-//    h3.twitter__title Twitter #FreedomOfSpeech
-//    ul.twitter__tweets
-//    each tweet in tweets
-//    li.twitter__tweet
-//    img(class="twitter__user-avatar" src=tweet.user.profile_image_url_https alt="Avatar")
-//    .twitter__content
-//    span.twitter__username= tweet.user.screen_name
-//    p.twitter__text= tweet.text
-//
-    var stream = client.stream('statuses/filter', {track: 'javascript'});
-    stream.on('data', function(event) {
-      console.log(event && event.text);
+    socket.on('stream', tweet => {
+        return `
+            <li class="twitter__tweet">
+                <img class="twitter__user-avatar" src="${tweet.user.profile_image_url_https}" alt="Avatar">
+                <div class="twitter__content">
+                    <span class="twitter__username">${tweet.user.screen_name}</span>
+                    <p class="twitter__text">${tweet.text}</p>
+                </div>
+            </li>
+        `
     });
 
-    stream.on('error', function(error) {
-          throw error;
-    });
-
-
-    if (currCountry) {
+   if (currCountry) {
         prepareCountryInfo(currCountry, document.querySelector('.country-info'));
     }
 
@@ -46,10 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList = 'country-info-visible';
         const currCountry = countryData.filter((x) => x.id === country.id)[0];
         history.pushState("object or string", "Title", "/" + currCountry.name.toLowerCase().replace(' ', '-'));
-        document.getElementById(country.id).style.fill = getColorByScore(currCountry.score);
+        document.getElementById(country.id).classList.add('active');
 
         infoDiv.innerHTML = renderCountryInfo(currCountry);
-        renderPieChart(currCountry.score, getColorByScore(currCountry.score));
+        renderPieChart(currCountry.score, '#b90102');
     }
 
     function openSection(e) {
@@ -67,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function searchResult() {
 
-        allCountries.forEach(x => x.style.fill = '');
+        allCountries.forEach(x => x.classList = '');
 
         const searchStr = searchBox.value.toLowerCase().trim();
 
@@ -77,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .filter(x => x.name.toLowerCase().indexOf(searchStr) > -1)
             .forEach(x => {
                 let el = document.getElementById(x.id);
-                el.style.fill = getColorByScore(x.score);
+                el.classList.add('active');
             });
     }
 
@@ -103,19 +93,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const allCountries = document.querySelectorAll('path');
-    allCountries.forEach(country => country.addEventListener('click', (e) => {
-        e.stopPropagation();
-        prepareCountryInfo(e.target, document.querySelector('.country-info'));
-    }));
+    allCountries.forEach(country => {
+        country.addEventListener('mouseover', el => el.target.classList.add('active'));
+        country.addEventListener('mouseout', el =>  el.target.classList = '');
+        country.addEventListener('click', (e) => {
+            e.stopPropagation();
+            prepareCountryInfo(e.target, document.querySelector('.country-info'));
+        })
+    });
 
     const menuItems = document.querySelectorAll('.navigation__list-item');
     menuItems.forEach(item => item.addEventListener('click', openSection));
-
-    allCountries.forEach(country => {
-        country.addEventListener('mouseover', el => el.target.style.fill = 'pink');
-        country.addEventListener('mouseout', el =>  el.target.style.fill = '');
-    });
-
 
     document.querySelector('.map').addEventListener('click', removeAllBodyClasses);
 
@@ -123,11 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.header__logo').addEventListener('click', removeAllBodyClasses);
 
     const situationNumbers = [
-        { name: 'Good', min: 0, max: 20, color: 'rgb(255, 255, 255)', class: 'good' },
-        { name: 'Satisfactory situation', min: 20, max: 40, color: 'rgb(30, 250, 200)', class: 'satisfactory' },
-        { name: 'Noticable problem', min: 40, max: 60, color: 'rgb(200, 170, 20)', class: 'noticable' },
-        { name: 'Difficult situation', min: 60, max: 80, color: 'rgb(230, 30, 0)', class: 'difficult' },
-        { name: 'Very serious situation', min: 80, max: 100, color: 'rgb(0, 0, 0)', class: 'serious' }
+        { name: 'Good', min: 0, max: 20 },
+        { name: 'Satisfactory situation', min: 20, max: 40 },
+        { name: 'Noticable problem', min: 40, max: 60 },
+        { name: 'Difficult situation', min: 60, max: 80 },
+        { name: 'Very serious situation', min: 80, max: 100 }
     ];
 
     situationNumbers.forEach(situation => {
@@ -140,18 +128,18 @@ document.addEventListener('DOMContentLoaded', () => {
         el.addEventListener('mouseover', e => {
             countryData
                 .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
-                .forEach(x => document.getElementById(x.id).classList.add(situation.class));
+                .forEach(x => document.getElementById(x.id).classList.add('active'));
         });
         el.addEventListener('mouseleave', removeClass);
 
         el.addEventListener('click', e => {
             countryData
                 .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
-                .forEach(x => document.getElementById(x.id).classList.add(situation.class));
+                .forEach(x => document.getElementById(x.id).classList.add('active'));
             document.querySelectorAll('.ranking-categories__item').forEach(situation => situation.addEventListener('mouseover', e => {
                 countryData
                     .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
-                    .forEach(x => document.getElementById(x.id).classList.add(situation.class));
+                    .forEach(x => document.getElementById(x.id).classList.add('active'));
             }));
             e.target.removeEventListener('mouseleave', removeClass);
         });
@@ -161,10 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function removeClass() {
         allCountries.forEach(x => x.classList = '');
-    }
-
-    function getColorByScore(score) {
-        return 'rgb(' + Math.round(score) * 4 + ', 150 , 100)';
     }
 
     function removeAllBodyClasses() {
