@@ -9,6 +9,10 @@ body {
 	font-weight: 300;
 }
 
+h1, h2, h3 {
+	font-weight: 200;
+}
+
 .modal { display: none; }
 .c-slider { display: none; }
 
@@ -58,18 +62,52 @@ body {
 
 .country-info {
 	background: #f4f4f4;
+	box-sizing: border-box;
+	text-align: center;
 	height: 100vh;
 	padding: 1em;
 	position: absolute;
 	opacity: 0;
 	overflow: scroll;
 	top: 0;
-	// transform: translateX(-110%);
 	transition: 400ms all ease-in;
 	width: 40%;
-	z-index: -15;
+	z-index: -9;
+	&__title {
+		font-weight: 300;
+	}
 	&__ranking-number {
-		font-size: 5em;
+		font-weight: 200;
+		font-size: 4em;
+		span {
+			font-size: .2em;
+			display: block;
+			padding: 0;
+		}
+	}
+	&__progression {
+		font-size: 4em;
+		font-weight: 100;
+		span {
+			font-size: .2em;
+			display: block;
+		}
+	}
+	&__score2015 {
+		font-size: 4em;
+		font-weight: 100;
+		span {
+			font-size: .2em;
+			display: block;
+		}
+	}
+	&__rank2015 {
+		font-size: 4em;
+		font-weight: 100;
+		span {
+			font-size: .2em;
+			display: block;
+		}
 	}
 }
 
@@ -213,7 +251,8 @@ body {
 }
 
 .footer {
-	bottom: 0;
+	bottom: 3em;
+	left: 0;
 	position: absolute;
 }
 

@@ -118,12 +118,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderCountryInfo(country) {
         return `
-            <span class="country-info__ranking-number"># ${country.rank}</span>
             <h2 class="country-info__title" data-id="${country.id}">${country.name}</h2>
+            <span class="country-info__ranking-number">
+                <div>Ranking</div>${country.rank}
+            </span>
             <canvas id="doughnut-chart" width="800" height="450"></canvas>
-            <p class="country-info__progression">${country.progression}</p>
-            <p class="country-info__rank2015">${country.rank2015}</p>
-            <p class="country-info__score2015">${country.score2015}</p>
+            <p class="country-info__progression">
+                <span>Progression:</span>${country.progression}
+            </p>
+            <p class="country-info__rank2015">
+                <span>Ranking 2015:</span>${country.rank2015}
+            </p>
+            <p class="country-info__score2015">
+                <span>Score 2015:</span>${country.score2015}
+            </p>
         `;
     }
 
