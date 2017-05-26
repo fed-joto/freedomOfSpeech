@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const situationNumbers = [
+    const situations = [
         { name: 'Good', min: 0, max: 20 },
         { name: 'Satisfactory situation', min: 20, max: 40 },
         { name: 'Noticable problem', min: 40, max: 60 },
@@ -8,28 +8,56 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Very serious situation', min: 80, max: 100 }
     ];
 
-    const completeCountry = countryData.map(country => {
-        country.situation = situationNumbers.filter(x => country.score > x.min && country.score <= x.max)[0].name
-        country.el = document.getElementById(country.id)
+    const completeCountries = countryData.map(country => {
+        country.situation = situations.filter(x => country.score > x.min && country.score <= x.max)[0].name
+        country.el = document.getElementById(country.id);
         country.onclick = country.el.addEventListener('click', e => {
             e.stopPropagation();
             prepareCountryInfo(country, document.querySelector('.country-info'));
         });
-        return country
-    })
+        country.addActive = () => country.el.classList.add('active');
+        country.removeActive = () => country.el.classList = '';
+        return country;
+    });
+
+    function removeActive() {
+        completeCountries.forEach(country => country.removeActive());
+    }
+
+    situations.forEach(situation => {
+        const el = document.createElement('li');
+        el.classList.add('ranking-categories__item');
+        el.innerHTML = situation.name;
+        el.addEventListener('mouseover', e => {
+            completeCountries.forEach(country => country.removeActive());
+            el.addEventListener('mouseout', removeActive);
+            completeCountries
+                .filter(country => situation.name === country.situation)
+                .forEach(country => country.addActive());
+        });
+
+        el.addEventListener('click', e => {
+            el.removeEventListener('mouseout', removeActive, false);
+            completeCountries
+                .filter(country => situation.name === country.situation)
+                .forEach(country => country.addActive());
+        });
+
+        el.addEventListener('mouseout', removeActive);
+
+        document.querySelector('.ranking-categories').appendChild(el);
+    });
 
     const socket = io.connect('http://localhost:3000');
-    socket.on('stream', tweet => {
-        return `
-            <li class="twitter__tweet">
-                <img class="twitter__user-avatar" src="${tweet.user.profile_image_url_https}" alt="Avatar">
-                <div class="twitter__content">
-                    <span class="twitter__username">${tweet.user.screen_name}</span>
-                    <p class="twitter__text">${tweet.text}</p>
-                </div>
-            </li>
-        `
-    });
+    socket.on('stream', tweet => `
+        <li class="twitter__tweet">
+            <img class="twitter__user-avatar" src="${tweet.user.profile_image_url_https}" alt="Avatar">
+            <div class="twitter__content">
+                <span class="twitter__username">${tweet.user.screen_name}</span>
+                <p class="twitter__text">${tweet.text}</p>
+            </div>
+        </li>
+    `);
 
    if (currCountry) {
         prepareCountryInfo(currCountry, document.querySelector('.country-info'));
@@ -53,8 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // if (country.id === document.querySelector('.country-info__title').dataset['id']) return removeAllBodyClasses();
 
         document.body.classList = 'country-info-visible';
-        const currCountry = countryData.filter((x) => x.id === country.id)[0];
-        history.pushState("object or string", "Title", "/" + currCountry.name.toLowerCase().replace(' ', '-'));
+        history.pushState("object or string", "Title", "/" + country.name.toLowerCase().replace(' ', '-'));
         country.el.classList.add('active');
 
         infoDiv.innerHTML = renderCountryInfo(country);
@@ -76,18 +103,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function searchResult() {
 
-        allCountries.forEach(x => x.classList = '');
+        completeCountries.forEach(x => x.el.classList = '');
 
         const searchStr = searchBox.value.toLowerCase().trim();
 
         if (searchStr.length < 1) return;
 
-        countryData
+        completeCountries
             .filter(x => x.name.toLowerCase().indexOf(searchStr) > -1)
-            .forEach(x => {
-                let el = document.getElementById(x.id);
-                el.classList.add('active');
-            });
+            .forEach(x => x.el.classList.add('active'));
     }
 
     // Pie Charts
@@ -111,63 +135,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // const allCountries = document.querySelectorAll('path');
-    // allCountries.forEach(country => {
-    //     country.addEventListener('mouseover', el => el.target.classList.add('active'));
-    //     country.addEventListener('mouseout', el =>  el.target.classList = '');
-    //     country.addEventListener('click', (e) => {
-    //         e.stopPropagation();
-    //         prepareCountryInfo(e.target, document.querySelector('.country-info'));
-    //     })
-    // });
-
     const menuItems = document.querySelectorAll('.navigation__list-item');
     menuItems.forEach(item => item.addEventListener('click', openSection));
-
-    document.querySelector('.map').addEventListener('click', removeAllBodyClasses);
-
-    // gör om gör rätt:
+    document.querySelector('.map').addEventListener('click', e => {
+        removeAllBodyClasses(e);
+        removeClass();
+    });
     document.querySelector('.header__logo').addEventListener('click', removeAllBodyClasses);
 
-    // const situationNumbers = [
-    //     { name: 'Good', min: 0, max: 20 },
-    //     { name: 'Satisfactory situation', min: 20, max: 40 },
-    //     { name: 'Noticable problem', min: 40, max: 60 },
-    //     { name: 'Difficult situation', min: 60, max: 80 },
-    //     { name: 'Very serious situation', min: 80, max: 100 }
-    // ];
-
-    // situationNumbers.forEach(situation => {
-    //     const el = document.createElement('li');
-    //     el.dataset['min'] = situation.min;
-    //     el.dataset['max'] = situation.max;
-    //     el.innerHTML = situation.name;
-    //     el.classList.add('ranking-categories__item');
-
-    //     el.addEventListener('mouseover', e => {
-    //         countryData
-    //             .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
-    //             .forEach(x => document.getElementById(x.id).classList.add('active'));
-    //     });
-    //     el.addEventListener('mouseleave', removeClass);
-
-    //     el.addEventListener('click', e => {
-    //         countryData
-    //             .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
-    //             .forEach(x => document.getElementById(x.id).classList.add('active'));
-    //         document.querySelectorAll('.ranking-categories__item').forEach(situation => situation.addEventListener('mouseover', e => {
-    //             countryData
-    //                 .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
-    //                 .forEach(x => document.getElementById(x.id).classList.add('active'));
-    //         }));
-    //         e.target.removeEventListener('mouseleave', removeClass);
-    //     });
-
-    //     document.querySelector('.ranking-categories').appendChild(el);
-    // });
-
     function removeClass() {
-        allCountries.forEach(x => x.classList = '');
+        completeCountries.forEach(country => country.removeActive());
     }
 
     function removeAllBodyClasses(e) {
