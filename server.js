@@ -5,6 +5,7 @@ const countryData = require('./assets/data.json');
 const http = require('http');
 const server = http.createServer(app);
 const io = require('socket.io').listen(server);
+const fs = require('fs');
 
 app.set('view engine', 'pug');
 app.use(express.static('assets'))
@@ -23,21 +24,22 @@ const client = new Twitter({
 
 app.get('/:country?', (req, res) => {
 
-    const currCountry = req.params.country
-        ? countryData.filter(x => x.name.toLowerCase() === req.params.country.replace('-', ' '))[0]
-        : '';
+   const currCountry = req.params.country
+       ? countryData.filter(x => x.name.toLowerCase() === req.params.country.replace('-', ' '))[0]
+       : '';
 
-    client.get('search/tweets', { q: 'freedomofspeech' }, (error, tweets, response) => {
+   client.get('search/tweets', { q: 'freedomofspeech' }, (error, tweets, response) => {
 
-        res.render('index', {
-            title: 'Freedom of Speech',
-            countryData: countryData,
-            tweets: tweets.statuses,
-            country: currCountry
-        });
+       res.render('index', {
+           title: 'Freedom of Speech',
+           countryData: countryData,
+           tweets: tweets.statuses,
+           country: currCountry
+       });
 
-    });
+   });
 });
+
 
 io.on('connection', (socket) => {
     console.log('Connected');

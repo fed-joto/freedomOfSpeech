@@ -1,5 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const situationNumbers = [
+        { name: 'Good', min: 0, max: 20 },
+        { name: 'Satisfactory situation', min: 20, max: 40 },
+        { name: 'Noticable problem', min: 40, max: 60 },
+        { name: 'Difficult situation', min: 60, max: 80 },
+        { name: 'Very serious situation', min: 80, max: 100 }
+    ];
+
+    const completeCountry = countryData.map(country => {
+        country.situation = situationNumbers.filter(x => country.score > x.min && country.score <= x.max)[0].name
+        country.el = document.getElementById(country.id)
+        country.onclick = country.el.addEventListener('click', e => {
+            e.stopPropagation();
+            prepareCountryInfo(country, document.querySelector('.country-info'));
+        });
+        return country
+    })
+
     const socket = io.connect('http://localhost:3000');
     socket.on('stream', tweet => {
         return `
@@ -17,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         prepareCountryInfo(currCountry, document.querySelector('.country-info'));
     }
 
-    window.onpopstate = event => console.log(event);
+    window.onpopstate = console.log;
 
     function renderCountryInfo(country) {
         return `
@@ -31,15 +49,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function prepareCountryInfo(country, infoDiv) {
-        if (country.id === document.querySelector('.country-info__title').dataset['id']) return removeAllBodyClasses();
+        console.log(country)
+        // if (country.id === document.querySelector('.country-info__title').dataset['id']) return removeAllBodyClasses();
 
         document.body.classList = 'country-info-visible';
         const currCountry = countryData.filter((x) => x.id === country.id)[0];
         history.pushState("object or string", "Title", "/" + currCountry.name.toLowerCase().replace(' ', '-'));
-        document.getElementById(country.id).classList.add('active');
+        country.el.classList.add('active');
 
-        infoDiv.innerHTML = renderCountryInfo(currCountry);
-        renderPieChart(currCountry.score, '#b90102');
+        infoDiv.innerHTML = renderCountryInfo(country);
+        renderPieChart(country.score, '#b90102');
     }
 
     function openSection(e) {
@@ -92,15 +111,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const allCountries = document.querySelectorAll('path');
-    allCountries.forEach(country => {
-        country.addEventListener('mouseover', el => el.target.classList.add('active'));
-        country.addEventListener('mouseout', el =>  el.target.classList = '');
-        country.addEventListener('click', (e) => {
-            e.stopPropagation();
-            prepareCountryInfo(e.target, document.querySelector('.country-info'));
-        })
-    });
+    // const allCountries = document.querySelectorAll('path');
+    // allCountries.forEach(country => {
+    //     country.addEventListener('mouseover', el => el.target.classList.add('active'));
+    //     country.addEventListener('mouseout', el =>  el.target.classList = '');
+    //     country.addEventListener('click', (e) => {
+    //         e.stopPropagation();
+    //         prepareCountryInfo(e.target, document.querySelector('.country-info'));
+    //     })
+    // });
 
     const menuItems = document.querySelectorAll('.navigation__list-item');
     menuItems.forEach(item => item.addEventListener('click', openSection));
@@ -110,48 +129,49 @@ document.addEventListener('DOMContentLoaded', () => {
     // gör om gör rätt:
     document.querySelector('.header__logo').addEventListener('click', removeAllBodyClasses);
 
-    const situationNumbers = [
-        { name: 'Good', min: 0, max: 20 },
-        { name: 'Satisfactory situation', min: 20, max: 40 },
-        { name: 'Noticable problem', min: 40, max: 60 },
-        { name: 'Difficult situation', min: 60, max: 80 },
-        { name: 'Very serious situation', min: 80, max: 100 }
-    ];
+    // const situationNumbers = [
+    //     { name: 'Good', min: 0, max: 20 },
+    //     { name: 'Satisfactory situation', min: 20, max: 40 },
+    //     { name: 'Noticable problem', min: 40, max: 60 },
+    //     { name: 'Difficult situation', min: 60, max: 80 },
+    //     { name: 'Very serious situation', min: 80, max: 100 }
+    // ];
 
-    situationNumbers.forEach(situation => {
-        const el = document.createElement('li');
-        el.dataset['min'] = situation.min;
-        el.dataset['max'] = situation.max;
-        el.innerHTML = situation.name;
-        el.classList.add('ranking-categories__item');
+    // situationNumbers.forEach(situation => {
+    //     const el = document.createElement('li');
+    //     el.dataset['min'] = situation.min;
+    //     el.dataset['max'] = situation.max;
+    //     el.innerHTML = situation.name;
+    //     el.classList.add('ranking-categories__item');
 
-        el.addEventListener('mouseover', e => {
-            countryData
-                .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
-                .forEach(x => document.getElementById(x.id).classList.add('active'));
-        });
-        el.addEventListener('mouseleave', removeClass);
+    //     el.addEventListener('mouseover', e => {
+    //         countryData
+    //             .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
+    //             .forEach(x => document.getElementById(x.id).classList.add('active'));
+    //     });
+    //     el.addEventListener('mouseleave', removeClass);
 
-        el.addEventListener('click', e => {
-            countryData
-                .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
-                .forEach(x => document.getElementById(x.id).classList.add('active'));
-            document.querySelectorAll('.ranking-categories__item').forEach(situation => situation.addEventListener('mouseover', e => {
-                countryData
-                    .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
-                    .forEach(x => document.getElementById(x.id).classList.add('active'));
-            }));
-            e.target.removeEventListener('mouseleave', removeClass);
-        });
+    //     el.addEventListener('click', e => {
+    //         countryData
+    //             .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
+    //             .forEach(x => document.getElementById(x.id).classList.add('active'));
+    //         document.querySelectorAll('.ranking-categories__item').forEach(situation => situation.addEventListener('mouseover', e => {
+    //             countryData
+    //                 .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
+    //                 .forEach(x => document.getElementById(x.id).classList.add('active'));
+    //         }));
+    //         e.target.removeEventListener('mouseleave', removeClass);
+    //     });
 
-        document.querySelector('.ranking-categories').appendChild(el);
-    });
+    //     document.querySelector('.ranking-categories').appendChild(el);
+    // });
 
     function removeClass() {
         allCountries.forEach(x => x.classList = '');
     }
 
-    function removeAllBodyClasses() {
+    function removeAllBodyClasses(e) {
+        e.stopPropagation();
         history.pushState(null, null, '/');
         return document.body.classList = '';
     }
