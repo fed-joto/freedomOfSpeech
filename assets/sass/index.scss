@@ -1,5 +1,6 @@
 $primaryColor: #b90102;
 
+
 body {
 	color: #525c65;
 	margin: 0;
@@ -7,6 +8,9 @@ body {
 	font-family: 'Lato', sans-serif;
 	font-weight: 300;
 }
+
+.modal { display: none; }
+.c-slider { display: none; }
 
 .header__logo {
 	position: absolute;
@@ -33,6 +37,9 @@ body {
 		text-transform: uppercase;
 	}
 }
+
+.navigation--menu { display: none; }
+.mobile__menu { display: none; }
 
 .map {
 	background: #e1e1e1;
@@ -323,6 +330,9 @@ path {
 	}
 }
 
+@media screen and (max-device-width: 950px) {
+	@import "_mobile";
+}
 .active {
     fill: $primaryColor;
 }

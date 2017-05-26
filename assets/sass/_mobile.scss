@@ -1,0 +1,154 @@
+* {
+	box-sizing: border-box;
+}
+
+.map { display: none; }
+.navigation { display: none; }
+.footer { display: none; }
+
+.wrapper {
+	overflow: hidden;
+}
+
+.navigation--mobile {
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-start;
+	position: absolute;
+	height: 50px;
+	top: 4vh;
+	right: 4vw;
+	width: 40%;
+}
+
+.navigation__list--mobile {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-size: 2em;
+	font-weight: 300;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-transform: uppercase;
+}
+
+.navigation__list-item--mobile {
+	margin: 10px 0;
+}
+
+.mobile__menu {
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255, 250, 250, 0.9);
+	top: 0;
+	left: 0;
+	opacity: 0;
+	&--active {
+		display: block;
+		opacity: 1;
+		z-index;
+	}
+}
+
+.close {
+	width: 25px;
+	top: 0;
+	right: 0;
+	position: absolute;
+	margin: 25px;
+}
+
+.c-slider {
+	display: flex;
+	background: rgb(225, 225, 225);
+	border-width: 10px;
+    border-style: solid;
+    border-color: rgb(255, 255, 255);
+    border-image: initial;
+    box-sizing: border-box;
+	height: 100vh;
+	position: relative;
+	&__slide { width: 100%; }
+}
+
+.c-slider__container {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+
+.header__logo {
+	img { width: 120px; }
+}
+
+.country-info-visible {
+	// transform: translateX(0%);
+	.wrapper {
+		left: 80%;
+	}
+	.country-info {
+		width: 100%;
+	}
+}
+
+.twitter-visible {
+	.wrapper {
+		left: -90%; 
+	}
+	.twitter {
+		width: 90%;
+	}
+}
+
+.about {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 50%;
+	text-align: center;
+	&__text {
+		width: 100%;
+	}
+}
+
+.take-action {
+	height: 90%;
+	align-items: center;
+	overflow-y: scroll;
+	margin: 0;
+	padding: 30px 0;
+
+	&__action {
+		margin: 0;
+		padding-bottom: 20px 0;
+	}
+	&__title {
+		font-size: 1.5em;
+		padding-bottom: 5px;
+		margin: 0;
+	}
+	&__text {
+		font-size: 1em;
+		line-height: 1.25em;
+		margin-bottom: 15px;
+		padding: 0;
+	}
+	&__icon {
+		width: 50px;
+		margin: 15px;
+	}
+}
+
+.action-visible {
+	.wrapper {
+		top: 90vh;
+	}
+}
