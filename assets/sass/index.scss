@@ -333,6 +333,11 @@ path {
 @media screen and (max-device-width: 950px) {
 	@import "_mobile";
 }
+
+.st0 {
+	fill: #999;
+}
+
 .active {
     fill: $primaryColor;
 }
