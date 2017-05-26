@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 .map { display: none; }
 
 .c-slider {
@@ -78,6 +82,24 @@
 	img { width: 120px; }
 }
 
+.country-info-visible {
+	// transform: translateX(0%);
+	.wrapper {
+		left: 80%;
+	}
+	.country-info {
+		width: 100%;
+	}
+}
+
+.twitter-visible {
+	.wrapper {
+		left: -90%; 
+	}
+	.twitter {
+		width: 90%;
+	}
+}
 
 .about {
 	height: 100%;
