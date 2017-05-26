@@ -61,13 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const completeCountries = countryData.map(country => {
         country.situation = situations.filter(x => country.score > x.min && country.score <= x.max)[0].name
-        country.el = document.getElementById(country.id);
-        country.onclick = country.el.addEventListener('click', e => {
+        country.el = document.querySelectorAll('.' + country.id);
+        country.onclick = country.el.forEach(x => x.addEventListener('click', e => {
             e.stopPropagation();
             prepareCountryInfo(country, document.querySelector('.country-info'));
-        });
-        country.addActive = () => country.el.classList.add('active');
-        country.removeActive = () => country.el.classList = '';
+        }));
+        country.addActive = () => country.el.forEach(x => x.classList.add('active'));
+        country.removeActive = () => country.el.forEach(x => x.classList = '');
         return country;
     });
 
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.body.classList = 'country-info-visible';
         history.pushState("object or string", "Title", "/" + country.name.toLowerCase().replace(' ', '-'));
-        country.el.classList.add('active');
+        country.addActive;
 
         infoDiv.innerHTML = renderCountryInfo(country);
         renderPieChart(country.score, '#b90102');
@@ -154,15 +154,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function searchResult() {
 
-        completeCountries.forEach(x => x.el.classList = '');
+        completeCountries.forEach(country => country.removeActive());
 
         const searchStr = searchBox.value.toLowerCase().trim();
 
         if (searchStr.length < 1) return;
 
         completeCountries
-            .filter(x => x.name.toLowerCase().indexOf(searchStr) > -1)
-            .forEach(x => x.el.classList.add('active'));
+            .filter(country => country.name.toLowerCase().indexOf(searchStr) > -1)
+            .forEach(country => country.addActive());
     }
 
     // Pie Charts
