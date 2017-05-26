@@ -41,8 +41,33 @@ html(lang="en")
         button.cta Newletter
 
     .wrapper
+      main.map
+        include ../assets/img/map.svg
+      
+      div(class="c-slider" id="hammer-slider")
+        .c-slider__container
+          .c-slider__slide
+            include ../assets/img/north-america.svg
+          .c-slider__slide
+            include ../assets/img/south-america.svg
+          .c-slider__slide
+            include ../assets/img/africa.svg
+          .c-slider__slide
+            include ../assets/img/europe.svg
+
       h1.header__logo
         img(src="./img/Reporters_Without_Borders.svg" alt="Logo")
+      nav.navigation--mobile
+        img(src="./img/menu.svg" alt="Search icon" width="50")
+
+      .mobile__menu
+        img(src="img/cross-out.svg" alt="" class="close" id="close")
+        ul.navigation__list--mobile
+          li(class="navigation__list-item navigation__list-item--about navigation__list-item--mobile" data-id="about") About
+          li(class="navigation__list-item navigation__list-item--action navigation__list-item--mobile" data-id="action") Take action
+          li(class="navigation__list-item navigation__list-item--twitter navigation__list-item--mobile" data-id="twitter") Spread the word
+          li(class="navigation__list-item navigation__list-item--search navigation__list-item--mobile" data-id="search") Search
+
       nav.navigation
         ul.navigation__list
           li(class="navigation__list-item navigation__list-item--about" data-id="about") About
@@ -51,26 +76,7 @@ html(lang="en")
           li(class="navigation__list-item navigation__list-item--search" data-id="search")
             img(src="./img/search.svg" alt="Search icon" width="16")
 
-      script(type='text/javascript').
-        if (window.innerWidth < 950) {
-          return `div(class="c-slider" id="hammer-slider")
-            .c-slider__container
-              .c-slider__slide
-                include ../assets/img/north-america.svg
-              .c-slider__slide
-                include ../assets/img/south-america.svg
-              .c-slider__slide
-                include ../assets/img/africa.svg
-              .c-slider__slide
-                include ../assets/img/europe.svg`
-        } else {
-          return `main.map
-            include ../assets/img/map.svg`
-        }
 
-      
-
-      
 
       footer.footer
         ul.ranking-categories

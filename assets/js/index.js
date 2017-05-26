@@ -7,10 +7,31 @@ document.addEventListener('DOMContentLoaded', () => {
       slideShow: false,
       dots: false,
       mouseDrag: true,
-      beforeSlideChange: (targetSlide) => {
-        console.log('Changing to slide number: ' + targetSlide);
-      }
+      beforeSlideChange: console.log
     });
+
+    const wrapper = document.querySelector('.wrapper');
+    const mobileMenu = document.querySelector('.mobile__menu');
+    const menuIcon = document.querySelector('.navigation--mobile');
+    menuIcon.addEventListener('click', () => {
+        removeAllBodyClasses();
+        mobileMenu.classList.add('mobile__menu--active');
+    });
+
+    const afterItemClick = document.querySelectorAll('.navigation__list-item--mobile');
+    afterItemClick.forEach(x => {
+        x.addEventListener('click', () => {
+            mobileMenu.classList.remove('mobile__menu--active');
+        });
+    });
+
+    const close = document.getElementById('close');
+    close.addEventListener('click', closeMenu);
+
+    function closeMenu() {
+       mobileMenu.classList.remove('mobile__menu--active');
+       return removeAllBodyClasses();    
+    }
 
 
 
