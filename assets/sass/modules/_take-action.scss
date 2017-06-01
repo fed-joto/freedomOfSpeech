@@ -1,0 +1,49 @@
+.take-action {
+	background: #f4f4f4;
+	align-items: flex-start;
+	box-shadow: 0 0 20px #666;
+	display: flex;
+	flex-wrap: wrap;
+	height: 50vh;
+	opacity: 0;
+	padding: 1em;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	transition: 400ms all ease-in;
+	z-index: -10;
+
+	&__action {
+		font-family: 'Lato', sans-serif;
+		font-weight: 300;
+		padding: 0 2em;
+		flex: 1 0 230px;
+	}
+
+	&__title {
+		font-weight: 300;
+		font-size: 2em;
+		margin: 0;
+	}
+
+	&__text {
+		font-size: 1.12em;
+		line-height: 1.25em;
+		margin: 0;
+		padding: 0 0 25px 0;
+	}
+
+	&__icon {
+		width: 80px;
+		padding: 15px 0 15px 0;
+	}
+
+}
+
+.action-visible {
+	.wrapper { top: 50vh; }
+	.take-action {
+		opacity: 1;
+		z-index: 0;
+	}
+}

@@ -1,73 +1,36 @@
+const worldMap = require('./map.js');
+const continents = require('./continents.js');
+const countryData = require('../data.json');
+
 document.addEventListener('DOMContentLoaded', () => {
-
-    // Mobile version
-
-    const slider = HammerSlider(document.getElementById('hammer-slider'), {
-      slideSpeed: 60,
-      slideShow: false,
-      dots: false,
-      mouseDrag: true,
-      beforeSlideChange: console.log
-    });
-
-    const wrapper = document.querySelector('.wrapper');
-    const mobileMenu = document.querySelector('.mobile__menu');
-    const menuIcon = document.querySelector('.navigation--mobile');
-    menuIcon.addEventListener('click', (e) => {
-        removeAllBodyClasses(e);
-        mobileMenu.classList.add('mobile__menu--active');
-    });
-
-    const afterItemClick = document.querySelectorAll('.navigation__list-item--mobile');
-    afterItemClick.forEach(x => {
-        x.addEventListener('click', () => {
-            mobileMenu.classList.remove('mobile__menu--active');
-        });
-    });
-
-    const close = document.getElementById('close');
-    close.addEventListener('click', closeMenu);
-
-    function closeMenu(e) {
-       mobileMenu.classList.remove('mobile__menu--active');
-       return removeAllBodyClasses(e);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    // Desktop version
 
     const situations = [
         { name: 'Good', min: 0, max: 20 },
         { name: 'Satisfactory situation', min: 20, max: 40 },
         { name: 'Noticable problem', min: 40, max: 60 },
-        { name: 'Difficult situation', min: 60, max: 80 },
-        { name: 'Very serious situation', min: 80, max: 100 }
+        { name: 'Difficult situation', min: 60, max: 70 },
+        { name: 'Very serious situation', min: 70, max: 100 }
     ];
+
+	if (window.innerWidth > 950) { // make work on resize aswell
+		document.querySelector('.map').innerHTML = worldMap;
+	} else {
+        document.querySelector('.c-slider__container').innerHTML = continents.map(continent => `
+            <div class="c-slider__slide">${continent}</div>
+		`).join('');
+	}
 
     const completeCountries = countryData.map(country => {
         country.situation = situations.filter(x => country.score > x.min && country.score <= x.max)[0].name
-        country.el = document.querySelectorAll('.' + country.id);
-        country.onclick = country.el.forEach(x => x.addEventListener('click', e => {
+        country.el = document.getElementById(country.id);
+        country.onclick = country.el.addEventListener('click', e => {
             e.stopPropagation();
             prepareCountryInfo(country, document.querySelector('.country-info'));
-        }));
-        country.addActive = () => country.el.forEach(x => x.classList.add('active'));
-        country.removeActive = () => country.el.forEach(x => x.classList = '');
+        });
+
+        country.addActive = () => country.el.classList.add('active');
+        country.removeActive = () => country.el.classList = '';
+        country.dashedName = country.name.toLowerCase().replace(' ', '-')
         return country;
     });
 
@@ -79,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const el = document.createElement('li');
         el.classList.add('ranking-categories__item');
         el.innerHTML = situation.name;
+
         el.addEventListener('mouseover', e => {
             completeCountries.forEach(country => country.removeActive());
             el.addEventListener('mouseout', removeActive);
@@ -98,23 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.querySelector('.ranking-categories').appendChild(el);
     });
-
-    // const socket = io.connect('http://localhost:3000');
-    // socket.on('stream', tweet => `
-    //     <li class="twitter__tweet">
-    //         <img class="twitter__user-avatar" src="${tweet.user.profile_image_url_https}" alt="Avatar">
-    //         <div class="twitter__content">
-    //             <span class="twitter__username">${tweet.user.screen_name}</span>
-    //             <p class="twitter__text">${tweet.text}</p>
-    //         </div>
-    //     </li>
-    // `);
-
-   if (currCountry) {
-        prepareCountryInfo(currCountry, document.querySelector('.country-info'));
-    }
-
-    window.onpopstate = console.log;
 
     function renderCountryInfo(country) {
         return `
@@ -136,12 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function prepareCountryInfo(country, infoDiv) {
-        console.log(country)
-        // if (country.id === document.querySelector('.country-info__title').dataset['id']) return removeAllBodyClasses();
-
+        removeActive();
+        country.addActive();
         document.body.classList = 'country-info-visible';
-        history.pushState("object or string", "Title", "/" + country.name.toLowerCase().replace(' ', '-'));
-        country.addActive;
+        history.pushState(null, null, '/'  + country.dashedName);
 
         infoDiv.innerHTML = renderCountryInfo(country);
         renderPieChart(country.score, '#b90102');
@@ -196,15 +141,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const menuItems = document.querySelectorAll('.navigation__list-item');
     menuItems.forEach(item => item.addEventListener('click', openSection));
+
     document.querySelector('.map').addEventListener('click', e => {
         removeAllBodyClasses(e);
-        removeClass();
+        removeActive();
     });
-    document.querySelector('.header__logo').addEventListener('click', removeAllBodyClasses);
 
-    function removeClass() {
-        completeCountries.forEach(country => country.removeActive());
-    }
+    document.querySelector('.header__logo').addEventListener('click', e => {
+        removeAllBodyClasses(e);
+        removeActive();
+    });
+
+    document.querySelector('.c-slider').addEventListener('click', e => {
+        removeAllBodyClasses(e);
+        removeActive();
+    });
 
     function removeAllBodyClasses(e) {
         e.stopPropagation();
@@ -212,4 +163,41 @@ document.addEventListener('DOMContentLoaded', () => {
         return document.body.classList = '';
     }
 
+    const url = window.location.href.split('/')
+    const queryString = url[url.length - 1]
+    const currCountry = countryData.filter(x => x.name.toLowerCase() === queryString.replace('-', ' '))[0];
+    
+    if (currCountry) {
+        prepareCountryInfo(currCountry, document.querySelector('.country-info'));
+    }
+
+    // Mobile version
+    const slider = HammerSlider(document.getElementById('hammer-slider'), {
+      slideSpeed: 60,
+      slideShow: false,
+      dots: false,
+      mouseDrag: true
+    });
+
+    const mobileMenu = document.querySelector('.mobile__menu');
+    const menuIcon = document.querySelector('.navigation--mobile');
+    menuIcon.addEventListener('click', (e) => {
+        removeAllBodyClasses(e);
+        mobileMenu.classList.add('mobile__menu--active');
+    });
+
+    const afterItemClick = document.querySelectorAll('.navigation__list-item--mobile');
+    afterItemClick.forEach(x => {
+        x.addEventListener('click', () => {
+            mobileMenu.classList.remove('mobile__menu--active');
+        });
+    });
+
+    const close = document.getElementById('close');
+    close.addEventListener('click', closeMenu);
+
+    function closeMenu(e) {
+       mobileMenu.classList.remove('mobile__menu--active');
+       return removeAllBodyClasses(e);
+    }
 });
