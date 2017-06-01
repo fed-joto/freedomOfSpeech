@@ -1,0 +1,23 @@
+.navigation {
+    position: absolute;
+	height: 47px;
+	top: 5vh;
+	right: 5vh;
+	width: 40%;
+
+	&__list {
+		display: flex;
+		font-size: 1em;
+		font-weight: 100;
+		justify-content: space-between;
+		list-style: none;
+		margin: 0;
+		padding: 5px 0;
+		text-transform: uppercase;
+		cursor: pointer;
+	}
+	
+}
+
+.navigation--menu { display: none; }
+.mobile__menu { display: none; }

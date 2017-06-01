@@ -1,95 +1,95 @@
+const worldMap = require('./map.js');
+const continents = require('./continents.js');
+const countryData = require('../data.json');
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Mobile version
+    const situations = [
+        { name: 'Good', min: 0, max: 20 },
+        { name: 'Satisfactory situation', min: 20, max: 40 },
+        { name: 'Noticable problem', min: 40, max: 60 },
+        { name: 'Difficult situation', min: 60, max: 70 },
+        { name: 'Very serious situation', min: 70, max: 100 }
+    ];
 
-    const slider = HammerSlider(document.getElementById('hammer-slider'), {
-      slideSpeed: 60,
-      slideShow: false,
-      dots: false,
-      mouseDrag: true,
-      beforeSlideChange: console.log
-    });
+	if (window.innerWidth > 950) { // make work on resize aswell
+		document.querySelector('.map').innerHTML = worldMap;
+	} else {
+        document.querySelector('.c-slider__container').innerHTML = continents.map(continent => `
+            <div class="c-slider__slide">${continent}</div>
+		`).join('');
+	}
 
-    const wrapper = document.querySelector('.wrapper');
-    const mobileMenu = document.querySelector('.mobile__menu');
-    const menuIcon = document.querySelector('.navigation--mobile');
-    menuIcon.addEventListener('click', () => {
-        removeAllBodyClasses();
-        mobileMenu.classList.add('mobile__menu--active');
-    });
-
-    const afterItemClick = document.querySelectorAll('.navigation__list-item--mobile');
-    afterItemClick.forEach(x => {
-        x.addEventListener('click', () => {
-            mobileMenu.classList.remove('mobile__menu--active');
+    const completeCountries = countryData.map(country => {
+        country.situation = situations.filter(x => country.score > x.min && country.score <= x.max)[0].name
+        country.el = document.getElementById(country.id);
+        country.onclick = country.el.addEventListener('click', e => {
+            e.stopPropagation();
+            prepareCountryInfo(country, document.querySelector('.country-info'));
         });
+
+        country.addActive = () => country.el.classList.add('active');
+        country.removeActive = () => country.el.classList = '';
+        country.dashedName = country.name.toLowerCase().replace(' ', '-')
+        return country;
     });
 
-    const close = document.getElementById('close');
-    close.addEventListener('click', closeMenu);
-
-    function closeMenu() {
-       mobileMenu.classList.remove('mobile__menu--active');
-       return removeAllBodyClasses();    
+    function removeActive() {
+        completeCountries.forEach(country => country.removeActive());
     }
 
+    situations.forEach(situation => {
+        const el = document.createElement('li');
+        el.classList.add('ranking-categories__item');
+        el.innerHTML = situation.name;
 
+        el.addEventListener('mouseover', e => {
+            completeCountries.forEach(country => country.removeActive());
+            el.addEventListener('mouseout', removeActive);
+            completeCountries
+                .filter(country => situation.name === country.situation)
+                .forEach(country => country.addActive());
+        });
 
+        el.addEventListener('click', e => {
+            el.removeEventListener('mouseout', removeActive, false);
+            completeCountries
+                .filter(country => situation.name === country.situation)
+                .forEach(country => country.addActive());
+        });
 
+        el.addEventListener('mouseout', removeActive);
 
-
-
-
-
-
-
-
-
-
-
-    
-
-    // Desktop version
-    const socket = io.connect('http://localhost:3000');
-    socket.on('stream', tweet => {
-        return `
-            <li class="twitter__tweet">
-                <img class="twitter__user-avatar" src="${tweet.user.profile_image_url_https}" alt="Avatar">
-                <div class="twitter__content">
-                    <span class="twitter__username">${tweet.user.screen_name}</span>
-                    <p class="twitter__text">${tweet.text}</p>
-                </div>
-            </li>
-        `
+        document.querySelector('.ranking-categories').appendChild(el);
     });
-
-   if (currCountry) {
-        prepareCountryInfo(currCountry, document.querySelector('.country-info'));
-    }
-
-    window.onpopstate = event => console.log(event);
 
     function renderCountryInfo(country) {
         return `
-            <span class="country-info__ranking-number"># ${country.rank}</span>
             <h2 class="country-info__title" data-id="${country.id}">${country.name}</h2>
+            <span class="country-info__ranking-number">
+                <div>Ranking</div>${country.rank}
+            </span>
             <canvas id="doughnut-chart" width="800" height="450"></canvas>
-            <p class="country-info__progression">${country.progression}</p>
-            <p class="country-info__rank2015">${country.rank2015}</p>
-            <p class="country-info__score2015">${country.score2015}</p>
+            <p class="country-info__progression">
+                <span>Progression:</span>${country.progression}
+            </p>
+            <p class="country-info__rank2015">
+                <span>Ranking 2015:</span>${country.rank2015}
+            </p>
+            <p class="country-info__score2015">
+                <span>Score 2015:</span>${country.score2015}
+            </p>
         `;
     }
 
     function prepareCountryInfo(country, infoDiv) {
-        if (country.id === document.querySelector('.country-info__title').dataset['id']) return removeAllBodyClasses();
-
+        removeActive();
+        country.addActive();
         document.body.classList = 'country-info-visible';
-        const currCountry = countryData.filter((x) => x.id === country.id)[0];
-        history.pushState("object or string", "Title", "/" + currCountry.name.toLowerCase().replace(' ', '-'));
-        document.getElementById(country.id).classList.add('active');
+        history.pushState(null, null, '/'  + country.dashedName);
 
-        infoDiv.innerHTML = renderCountryInfo(currCountry);
-        renderPieChart(currCountry.score, '#b90102');
+        infoDiv.innerHTML = renderCountryInfo(country);
+        renderPieChart(country.score, '#b90102');
     }
 
     function openSection(e) {
@@ -107,18 +107,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function searchResult() {
 
-        allCountries.forEach(x => x.classList = '');
+        completeCountries.forEach(country => country.removeActive());
 
         const searchStr = searchBox.value.toLowerCase().trim();
 
         if (searchStr.length < 1) return;
 
-        countryData
-            .filter(x => x.name.toLowerCase().indexOf(searchStr) > -1)
-            .forEach(x => {
-                let el = document.getElementById(x.id);
-                el.classList.add('active');
-            });
+        completeCountries
+            .filter(country => country.name.toLowerCase().indexOf(searchStr) > -1)
+            .forEach(country => country.addActive());
     }
 
     // Pie Charts
@@ -142,68 +139,65 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const allCountries = document.querySelectorAll('path');
-    allCountries.forEach(country => {
-        country.addEventListener('mouseover', el => el.target.classList.add('active'));
-        country.addEventListener('mouseout', el =>  el.target.classList = '');
-        country.addEventListener('click', (e) => {
-            e.stopPropagation();
-            prepareCountryInfo(e.target, document.querySelector('.country-info'));
-        })
-    });
-
     const menuItems = document.querySelectorAll('.navigation__list-item');
     menuItems.forEach(item => item.addEventListener('click', openSection));
 
-    document.querySelector('.map').addEventListener('click', removeAllBodyClasses);
-
-    // gör om gör rätt:
-    document.querySelector('.header__logo').addEventListener('click', removeAllBodyClasses);
-
-    const situationNumbers = [
-        { name: 'Good', min: 0, max: 20 },
-        { name: 'Satisfactory situation', min: 20, max: 40 },
-        { name: 'Noticable problem', min: 40, max: 60 },
-        { name: 'Difficult situation', min: 60, max: 80 },
-        { name: 'Very serious situation', min: 80, max: 100 }
-    ];
-
-    situationNumbers.forEach(situation => {
-        const el = document.createElement('li');
-        el.dataset['min'] = situation.min;
-        el.dataset['max'] = situation.max;
-        el.innerHTML = situation.name;
-        el.classList.add('ranking-categories__item');
-
-        el.addEventListener('mouseover', e => {
-            countryData
-                .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
-                .forEach(x => document.getElementById(x.id).classList.add('active'));
-        });
-        el.addEventListener('mouseleave', removeClass);
-
-        el.addEventListener('click', e => {
-            countryData
-                .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
-                .forEach(x => document.getElementById(x.id).classList.add('active'));
-            document.querySelectorAll('.ranking-categories__item').forEach(situation => situation.addEventListener('mouseover', e => {
-                countryData
-                    .filter(country => country.score > e.target.dataset['min'] && country.score <= e.target.dataset['max'])
-                    .forEach(x => document.getElementById(x.id).classList.add('active'));
-            }));
-            e.target.removeEventListener('mouseleave', removeClass);
-        });
-
-        document.querySelector('.ranking-categories').appendChild(el);
+    document.querySelector('.map').addEventListener('click', e => {
+        removeAllBodyClasses(e);
+        removeActive();
     });
 
-    function removeClass() {
-        allCountries.forEach(x => x.classList = '');
-    }
+    document.querySelector('.header__logo').addEventListener('click', e => {
+        removeAllBodyClasses(e);
+        removeActive();
+    });
 
-    function removeAllBodyClasses() {
+    document.querySelector('.c-slider').addEventListener('click', e => {
+        removeAllBodyClasses(e);
+        removeActive();
+    });
+
+    function removeAllBodyClasses(e) {
+        e.stopPropagation();
         history.pushState(null, null, '/');
         return document.body.classList = '';
     }
 
+    const url = window.location.href.split('/')
+    const queryString = url[url.length - 1]
+    const currCountry = countryData.filter(x => x.name.toLowerCase() === queryString.replace('-', ' '))[0];
+    
+    if (currCountry) {
+        prepareCountryInfo(currCountry, document.querySelector('.country-info'));
+    }
+
+    // Mobile version
+    const slider = HammerSlider(document.getElementById('hammer-slider'), {
+      slideSpeed: 60,
+      slideShow: false,
+      dots: false,
+      mouseDrag: true
+    });
+
+    const mobileMenu = document.querySelector('.mobile__menu');
+    const menuIcon = document.querySelector('.navigation--mobile');
+    menuIcon.addEventListener('click', (e) => {
+        removeAllBodyClasses(e);
+        mobileMenu.classList.add('mobile__menu--active');
+    });
+
+    const afterItemClick = document.querySelectorAll('.navigation__list-item--mobile');
+    afterItemClick.forEach(x => {
+        x.addEventListener('click', () => {
+            mobileMenu.classList.remove('mobile__menu--active');
+        });
+    });
+
+    const close = document.getElementById('close');
+    close.addEventListener('click', closeMenu);
+
+    function closeMenu(e) {
+       mobileMenu.classList.remove('mobile__menu--active');
+       return removeAllBodyClasses(e);
+    }
 });

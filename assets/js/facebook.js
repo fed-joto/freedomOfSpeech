@@ -4,31 +4,29 @@
     js = d.createElement(s); js.id = id
     js.src = "//connect.facebook.net/en_US/sdk.js"
     fjs.parentNode.insertBefore(js, fjs)
-}(document, 'script', 'facebook-jssdk'))
+}(document, 'script', 'facebook-jssdk'));
 
 function statusChangeCallback(res) {
     if (res.status === 'connected') {
-        shareOnFacebook()
+        shareOnFacebook();
     } else {
-        FB.login(shareOnFacebook, { scope: ['public_profile'] })
+        FB.login(shareOnFacebook, { scope: ['public_profile'] });
     }
 }
 
 function checkLoginState() {
-    FB.getLoginStatus(statusChangeCallback) // callback called with response
+    FB.getLoginStatus(statusChangeCallback); // callback called with response
 }
 
-function testAPI() {
-    FB.getLoginStatus(statusChangeCallback)
+function shareIt() {
+    FB.getLoginStatus(statusChangeCallback);
 }
 
 function shareOnFacebook() {
     FB.ui({
         method: 'share',
         href: 'https://www.reporterswithoutborders.com/',
-    }, () => {
-        document.body.classList = ''
-    });
+    }, () => document.body.classList = '');
 }
 
 window.fbAsyncInit = () => {
@@ -37,5 +35,5 @@ window.fbAsyncInit = () => {
         cookie     : true,
         xfbml      : true,
         version    : 'v2.8'
-    })
-};
+    });
+}

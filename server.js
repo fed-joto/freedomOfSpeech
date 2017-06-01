@@ -1,18 +1,9 @@
 const express = require('express');
 const Twitter = require('twitter');
 const app = express();
-const countryData = require('./assets/data.json');
-const http = require('http');
-const server = http.createServer(app);
-const io = require('socket.io').listen(server);
+const main = require('./views/main');
 
-app.set('view engine', 'pug');
-app.use(express.static('assets'))
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use(express.static('assets'));
 
 const client = new Twitter({
   consumer_key: 'PRc0MaBJZksAx03vEcPYLWwva',
@@ -22,30 +13,11 @@ const client = new Twitter({
 });
 
 app.get('/:country?', (req, res) => {
-
-    const currCountry = req.params.country
-        ? countryData.filter(x => x.name.toLowerCase() === req.params.country.replace('-', ' '))[0]
-        : '';
-
-    client.get('search/tweets', { q: 'freedomofspeech' }, (error, tweets, response) => {
-
-        res.render('index', {
-            title: 'Freedom of Speech',
-            countryData: countryData,
-            tweets: tweets.statuses,
-            country: currCountry
-        });
-
-    });
+   client.get('search/tweets', { q: 'freedomofspeech' }, (err, tweets, response) => {
+       res.send(main(tweets));
+   });
 });
 
-io.on('connection', (socket) => {
-    console.log('Connected');
-    var stream = client.stream('statuses/filter', { track: 'freedomofspeech' });
-    stream.on('data', tweet => io.emit('stream', tweet));
-    stream.on('error', console.log);
-});
-
-server.listen(3000, () => {
+app.listen(3000, () => {
     console.log('App running on http://localhost:3000');
 });

@@ -1,0 +1,30 @@
+.map {
+	background: #e1e1e1;
+	border: 15px solid #fff;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: center;
+	height: 100vh;
+	width: 100%;
+
+	#map {
+		width: 70%;
+	}
+
+}
+
+.c-slider { display: none; }
+
+path {
+	fill: #424242;
+	stroke: #FFFFFF;
+	stroke-width: 0.5;
+	cursor: pointer;
+	transition: 400ms all;
+}
+
+.st0 { fill: #999; }
+
+.active, path:hover { fill: $primaryColor; }
